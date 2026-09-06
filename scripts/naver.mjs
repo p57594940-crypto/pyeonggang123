@@ -49,8 +49,17 @@ async function callApi(query, { id, secret }) {
     headers: { "X-Naver-Client-Id": id, "X-Naver-Client-Secret": secret },
   });
   if (res.status === 429) throw new Error("rate-limited (429)");
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    let body = "";
+    try { body = (await res.text()).slice(0, 300); } catch { /* ignore */ }
+    throw new Error(`HTTP ${res.status} — ${body}`);
+  }
   return res.json();
+}
+
+// 자격증명 점검용 단발 호출 (진단)
+export async function ping(creds) {
+  return callApi("소니 A7", creds);
 }
 
 /** 카메라 1종의 신품/중고 대표가를 반환. 실패 시 null 필드. */
@@ -60,7 +69,7 @@ export async function fetchPrice(cam, creds) {
   try {
     j = await callApi(query, creds);
   } catch (e) {
-    return { id: cam.id, error: e.message, new: null, used: null, nNew: 0, nUsed: 0 };
+    return { id: cam.id, query, error: e.message, new: null, used: null, nNew: 0, nUsed: 0 };
   }
   const items = Array.isArray(j.items) ? j.items : [];
   const newP = [], usedP = [];
@@ -77,9 +86,11 @@ export async function fetchPrice(cam, creds) {
   }
   return {
     id: cam.id,
+    query,
     new: robustMedian(newP),
     used: robustMedian(usedP),
     nNew: newP.length,
     nUsed: usedP.length,
+    nItems: items.length,
   };
 }

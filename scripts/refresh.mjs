@@ -10,7 +10,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
-import { fetchPrice } from "./naver.mjs";
+import { fetchPrice, ping } from "./naver.mjs";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DATA_PATH = path.join(ROOT, "data.js");
@@ -59,22 +59,39 @@ async function refreshPrices(cameras) {
     console.log("네이버 자격증명 없음 → 가격 수집 건너뜀 (NAVER_CLIENT_ID/SECRET)");
     return null;
   }
+  console.log(`네이버 자격증명 감지: ID ${id.length}자 / SECRET ${secret.length}자`);
+
+  // 자격증명 사전 점검 — 여기서 실패하면 원인이 바로 보임
+  try {
+    const t = await ping({ id, secret });
+    console.log(`네이버 API 연결 OK (검색 결과 ${t.total ?? "?"}건)`);
+  } catch (e) {
+    console.error("네이버 API 연결 실패 →", e.message);
+    console.error("체크: (1) 개발자센터 developers.naver.com 에서 발급한 '검색' API 자격증명인지");
+    console.error("      (2) 애플리케이션에 '검색' API 가 추가돼 있는지");
+    console.error("      (3) Secret 이름/값 오타 (NAVER_CLIENT_ID / NAVER_CLIENT_SECRET)");
+    process.exitCode = 1;
+    return null;
+  }
 
   const out = {};
-  let ok = 0, fail = 0;
+  let ok = 0, fail = 0, nNoMatch = 0;
   for (const cam of cameras) {
     const r = await fetchPrice(cam, { id, secret });
     if (r.error) {
       fail++;
-      if (fail <= 3) console.error(`  ${cam.id}: ${r.error}`);
+      if (fail <= 5) console.error(`  실패 ${cam.id}: ${r.error}`);
       if (/429|rate-limited/.test(r.error)) { console.error("한도 초과 — 중단"); break; }
     } else if (r.new || r.used) {
       out[cam.id] = { new: r.new, used: r.used, nNew: r.nNew, nUsed: r.nUsed };
       ok++;
+    } else {
+      nNoMatch++;
+      if (nNoMatch <= 5) console.log(`  매칭 0 ${cam.id} (검색어: "${r.query || ""}")`);
     }
     await sleep(120); // 초당 ~8회
   }
-  console.log(`네이버 가격: ${ok}종 수집, ${fail}종 실패`);
+  console.log(`네이버 가격: 수집 ${ok}종 / 매칭0 ${nNoMatch}종 / 오류 ${fail}종`);
   if (ok < cameras.length * 0.3) {
     console.error("수집률이 너무 낮음 — prices.js 갱신 생략");
     return null;
