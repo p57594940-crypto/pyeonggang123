@@ -17,7 +17,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: 환율 등 갱신
+      - name: 환율 + 네이버 쇼핑 가격 갱신
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
         run: node scripts/refresh.mjs
 
       - name: 검증
@@ -25,12 +28,12 @@ jobs:
 
       - name: 변경 시 커밋
         run: |
-          if git diff --quiet -- data.js; then
+          if git diff --quiet -- data.js prices.js; then
             echo "변경 없음 — 커밋 건너뜀"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.js
-          git commit -m "chore: 데이터 자동 갱신 (환율) [skip ci]"
+          git add data.js prices.js
+          git commit -m "chore: 데이터 자동 갱신 (환율·네이버 가격) [skip ci]"
           git push

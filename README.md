@@ -26,13 +26,29 @@ python3 -m http.server 8000
 ## 데이터 검증 / 자동 갱신
 
 ```bash
-node scripts/validate.mjs   # data.js 무결성 검사 (CI 에서도 실행)
-node scripts/refresh.mjs    # 환율 등 자동 갱신 (data.js 의 meta.rates 갱신)
+node scripts/validate.mjs                                   # data.js·prices.js 무결성 검사 (CI 에서도 실행)
+node scripts/refresh.mjs                                     # 환율만 갱신
+NAVER_CLIENT_ID=xxx NAVER_CLIENT_SECRET=yyy node scripts/refresh.mjs   # 환율 + 네이버 쇼핑 가격
 ```
 
 - `.github/workflows/ci.yml` — push·PR 마다 `validate.mjs` 실행
-- `.github/workflows/refresh.yml` — 매주 + 수동 실행, `refresh.mjs` 로 환율 갱신 후 변경 시 자동 커밋
-- 가격 스크래핑 provider 는 `refresh.mjs` 에 추가 지점을 마련해 뒀으나, 대상 사이트 약관 문제로 아직 비어 있음
+- `.github/workflows/refresh.yml` — 매주 월 20:17 UTC + 수동 실행. `refresh.mjs` → `validate.mjs` → 변경 시 자동 커밋
+
+### 가격 자동 수집 (네이버 쇼핑 검색 API)
+
+- `scripts/naver.mjs` 가 카메라별로 `GET https://openapi.naver.com/v1/search/shop.json` 호출
+- 렌즈킷·액세서리 매물을 제외하고, `productType` 으로 신품/중고를 나눠 **매물가 중앙값**(극단값 제거)을 계산
+- 결과는 `prices.js` 전체를 새로 써서 저장 → `index.html` 이 읽어 "신품 최저가 / 중고 시세" 로 표시
+- `data.js` 의 수기 `used` 값은 네이버 매물이 없을 때 **폴백(추정)** 으로만 사용
+
+**설정** — GitHub 저장소 `Settings → Secrets and variables → Actions → New repository secret` 에 두 개 추가:
+
+| 이름 | 값 |
+|---|---|
+| `NAVER_CLIENT_ID` | 네이버 개발자센터 애플리케이션의 Client ID |
+| `NAVER_CLIENT_SECRET` | 같은 애플리케이션의 Client Secret |
+
+애플리케이션에 **검색 API** 가 추가돼 있어야 합니다. 시크릿이 없으면 가격 수집은 건너뛰고 환율만 갱신됩니다.
 
 ## 데이터에 대한 주의
 

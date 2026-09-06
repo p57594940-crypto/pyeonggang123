@@ -195,7 +195,11 @@
   }
   .row .v.r { justify-content: flex-end; text-align: right; flex-direction: row-reverse; }
   .row .v .t { font-family: "IBM Plex Sans KR", sans-serif; font-weight: 500; }
+  .row .v { flex-wrap: wrap; }
+  .row .v .src { flex-basis: 100%; font-size: .66rem; color: var(--muted); font-family: "IBM Plex Sans KR", sans-serif; font-weight: 400; }
+  .row .v.r .src { text-align: right; }
   .row .v.win { color: var(--win); font-weight: 600; }
+  .row .v.win .src { color: var(--muted); font-weight: 400; }
   .row .v.win::after { content: "▲"; font-size: .58rem; color: var(--win); transform: translateY(-1px); }
   .row .v.r.win::after { order: 2; }
   .row.hl { background: var(--surface-2); }
@@ -279,6 +283,7 @@
 </div>
 
 <script src="data.js"></script>
+<script src="prices.js"></script>
 <script>
 (function () {
   "use strict";
@@ -290,6 +295,8 @@
     var o = {}; F.forEach(function (k, i) { o[k] = r[i]; }); return o;
   });
   var USED = DB.used || {};
+  var PRICES = (window.CAMERA_PRICES) || {};
+  var PRICES_ASOF = (PRICES._meta && PRICES._meta.asOf) || null;
 
   var BRAND_ORDER = ["소니","캐논","니콘","후지필름","파나소닉","OM System","라이카","시그마","펜탁스","리코"];
 
@@ -301,7 +308,8 @@
       { key: "format", label: "센서 포맷", type: "text", core: true },
       { key: "mount", label: "마운트", type: "text" },
       { key: "price", label: "출시가", type: "num", better: "low", fmt: "won", core: true },
-      { key: "used", label: "중고 시세", type: "num", better: "low", fmt: "won", zero: "정보 없음", core: true },
+      { key: "newNow", label: "신품 최저가", type: "num", better: "low", fmt: "won", zero: "미확인", srcKey: "newSrc", core: true },
+      { key: "used", label: "중고 시세", type: "num", better: "low", fmt: "won", zero: "정보 없음", srcKey: "usedSrc", core: true },
       { key: "users", label: "추정 사용자 수", type: "num", better: "high", fmt: "people", core: true }
     ]},
     { title: "센서 · 이미지", rows: [
@@ -349,8 +357,14 @@
   }
   function derived(c) {
     c.releasedLabel = c.year + "년 " + c.mon + "월";
-    c.used = USED[c.id] || 0;
     c.burstBest = Math.max(Number(c.burstM) || 0, Number(c.burstE) || 0);
+    var p = PRICES[c.id] || {};
+    // 신품가: 네이버 수집값 우선
+    c.newNow = p.new || 0;
+    c.newSrc = p.new ? ("네이버 " + p.nNew + "건") : "";
+    // 중고가: 네이버 수집값 → 없으면 수기 추정값
+    c.used = p.used || USED[c.id] || 0;
+    c.usedSrc = p.used ? ("네이버 " + p.nUsed + "건") : (USED[c.id] ? "추정" : "");
     return c;
   }
   CAMERAS.forEach(derived);
@@ -418,6 +432,7 @@
         '<span class="chip">' + esc(c.body) + '</span></div>' +
       '<div class="kv"><dt>출시</dt><dd>' + c.releasedLabel + '</dd></div>' +
       '<div class="kv"><dt>출시가</dt><dd>' + won(c.price) + '</dd></div>' +
+      (c.newNow ? '<div class="kv"><dt>신품 최저가</dt><dd>' + won(c.newNow) + '</dd></div>' : '') +
       '<div class="kv"><dt>중고 시세</dt><dd>' + (c.used ? won(c.used) : "정보 없음") + '</dd></div>';
   }
 
@@ -442,9 +457,10 @@
     var aWins = row.better === "high" ? na > nb : na < nb;
     return aWins ? -1 : 1;
   }
-  function valCell(text, side, win) {
+  function valCell(text, side, win, sub) {
     return '<div class="v ' + (side === "r" ? "r " : "") + (win ? "win" : "") + '">' +
-      '<span class="t">' + esc(text) + "</span></div>";
+      '<span class="t">' + esc(text) + "</span>" +
+      (sub ? '<span class="src">' + esc(sub) + "</span>" : "") + "</div>";
   }
 
   function keyDiffs(a, b) {
@@ -491,22 +507,22 @@
     }
 
     // tiles
+    var moneyH = { "출시가": 1, "신품 최저가": 1, "중고 시세": 1 };
     var tileDefs = [
       { h: "출시가", ka: won(a.price), kb: won(b.price), na: a.price, nb: b.price, lowBetter: true },
-      { h: "중고 시세", ka: a.used ? won(a.used) : "정보 없음", kb: b.used ? won(b.used) : "정보 없음", na: a.used, nb: b.used, lowBetter: true },
-      { h: "출시 연도", ka: a.year + "년", kb: b.year + "년", na: a.year, nb: b.year, lowBetter: false, dyear: true },
+      { h: "신품 최저가", ka: a.newNow ? won(a.newNow) : "미확인", kb: b.newNow ? won(b.newNow) : "미확인", na: a.newNow, nb: b.newNow, lowBetter: true, sa: a.newSrc, sb: b.newSrc },
+      { h: "중고 시세", ka: a.used ? won(a.used) : "정보 없음", kb: b.used ? won(b.used) : "정보 없음", na: a.used, nb: b.used, lowBetter: true, sa: a.usedSrc, sb: b.usedSrc },
       { h: "추정 사용자 수", ka: people(a.users), kb: people(b.users), na: a.users, nb: b.users, lowBetter: false }
     ];
     $("#tiles").innerHTML = tileDefs.map(function (t) {
       var win = 0, delta = "";
       if (!same && t.na && t.nb && t.na !== t.nb) {
         win = (t.lowBetter ? t.na < t.nb : t.na > t.nb) ? 1 : 2;
-        if (t.h === "출시가" || t.h === "중고 시세") delta = won(Math.abs(t.na - t.nb)) + " 차이";
-        else if (t.dyear) delta = Math.abs(t.na - t.nb) + "년 차이";
+        if (moneyH[t.h]) delta = won(Math.abs(t.na - t.nb)) + " 차이";
       }
       return '<div class="tile"><h3>' + t.h + '</h3><div class="pair">' +
-        '<div><div class="val' + (win === 1 ? " w" : "") + '">' + t.ka + '</div><div class="who">' + esc(a.name) + '</div></div>' +
-        '<div><div class="val' + (win === 2 ? " w" : "") + '">' + t.kb + '</div><div class="who">' + esc(b.name) + '</div></div>' +
+        '<div><div class="val' + (win === 1 ? " w" : "") + '">' + t.ka + '</div><div class="who">' + esc(a.name) + (t.sa ? ' · ' + esc(t.sa) : "") + '</div></div>' +
+        '<div><div class="val' + (win === 2 ? " w" : "") + '">' + t.kb + '</div><div class="who">' + esc(b.name) + (t.sb ? ' · ' + esc(t.sb) : "") + '</div></div>' +
         (delta ? '<div class="delta">' + delta + '</div>' : '') +
         '</div></div>';
     }).join("");
@@ -519,11 +535,12 @@
       html += '<div class="grp">' + g.title + "</div>";
       rows.forEach(function (row) {
         var w = winSide(row, a, b);
-        var hl = row.key === "used" || row.key === "price" || row.key === "users";
+        var hl = row.key === "used" || row.key === "newNow" || row.key === "users";
+        var sa = row.srcKey ? a[row.srcKey] : "", sb = row.srcKey ? b[row.srcKey] : "";
         html += '<div class="row' + (hl ? " hl" : "") + '">' +
-          valCell(fmtVal(row, a), "l", w === -1) +
+          valCell(fmtVal(row, a), "l", w === -1, sa) +
           '<div class="lbl">' + row.label + "</div>" +
-          valCell(fmtVal(row, b), "r", w === 1) +
+          valCell(fmtVal(row, b), "r", w === 1, sb) +
           "</div>";
       });
     });
@@ -534,7 +551,7 @@
       "<p>" + (same
         ? "같은 기종을 골랐어요. 다른 기종을 선택하면 유리한 값에 <b style='color:var(--win)'>▲</b> 가 표시됩니다."
         : "<b style='color:var(--win)'>▲</b> 는 수치를 단순 비교해 유리한 쪽입니다. 화질·색감·조작감·렌즈군은 수치만으로 판단하기 어렵습니다.") + "</p>" +
-      "<p><b>중고 시세</b> — " + esc(m.usedNote || "") + ". <a href='https://uacamera.co.kr' target='_blank' rel='noopener'>UA카메라</a> 등 참고. '정보 없음'은 아직 시세 미기입.</p>" +
+      "<p><b>신품 최저가 · 중고 시세</b> — '네이버 N건' 표시는 " + (PRICES_ASOF ? esc(PRICES_ASOF) + " " : "") + "네이버 쇼핑 매물 N개의 중앙값입니다(렌즈킷·액세서리 제외). 중고는 네이버 매물이 없으면 '추정'(수기 근사치, <a href='https://uacamera.co.kr' target='_blank' rel='noopener'>UA카메라</a> 등 참고)으로 대체됩니다. 실제 거래가는 상태·구성·시점에 따라 다릅니다.</p>" +
       "<p><b>추정 사용자 수</b> — " + esc(m.usersNote || "") + ". 소니 α7 III·α6000, 후지 X100VI 등 일부만 '분기 최다 판매' 수준의 근거가 있음.</p>" +
       "<p><b>출시가</b> — " + esc(m.priceNote || "") + ". 스펙은 v1 근사치가 섞여 있으며 계속 보정 중입니다.</p>";
   }

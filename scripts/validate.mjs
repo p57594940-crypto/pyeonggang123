@@ -73,6 +73,23 @@ if (!DB) {
   if (!meta || !/^\d{4}-\d{2}-\d{2}$/.test(meta.updated || "")) E("meta.updated 가 YYYY-MM-DD 형식이 아님");
   if (!meta || !("rates" in meta)) E("meta.rates 키가 없음 (refresh.mjs 대상)");
 
+  // prices.js (네이버 자동 수집 가격) — 있으면 가볍게 검사
+  try {
+    const pShim = {};
+    new Function("window", "globalThis", readFileSync(path.join(root, "prices.js"), "utf8"))(pShim, pShim);
+    const P = pShim.CAMERA_PRICES || {};
+    let priced = 0;
+    for (const [k, v] of Object.entries(P)) {
+      if (k === "_meta") continue;
+      if (!ids.has(k)) E(`prices["${k}"]: 대응하는 카메라 id 없음`);
+      for (const f of ["new", "used"]) {
+        if (v[f] != null && !(typeof v[f] === "number" && v[f] > 0)) E(`prices["${k}"].${f} 가 양수/​null 이 아님 (${v[f]})`);
+      }
+      if (v.new || v.used) priced++;
+    }
+    console.log(`네이버 가격 ${priced}종`);
+  } catch { /* prices.js 없음 — 무시 */ }
+
   console.log(`카메라 ${cameras.length}종 · 중고 시세 ${Object.keys(used).length}건 검사`);
 }
 
