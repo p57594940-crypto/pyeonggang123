@@ -560,7 +560,11 @@
   });
 
   $("#total").textContent = CAMERAS.length;
-  $("#updated").textContent = (DB.meta && DB.meta.updated) || "—";
+  (function () {
+    var m = DB.meta || {}, s = m.updated || "—";
+    if (m.rates && m.rates.usdKrw) s += " · 환율 $1≈₩" + Number(m.rates.usdKrw).toLocaleString("ko-KR");
+    $("#updated").textContent = s;
+  })();
   buildBrands();
   fillSelects();
   if (selA.querySelector('option[value="sony-a7iv"]')) selA.value = "sony-a7iv";

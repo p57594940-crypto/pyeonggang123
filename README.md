@@ -11,17 +11,28 @@
 - **추정 사용자 수**: 기종별 대략적 추정치 (신뢰도 표기)
 - 수치 비교가 가능한 항목은 유리한 쪽을 자동 강조
 - 라이트/다크 테마, 모바일 대응
-- 현재 **102종** 수록
+- 현재 **132종** 수록
 
 ## 실행
 
-정적 HTML 한 파일입니다. 그냥 열면 됩니다.
+정적 사이트입니다. `data.js` 를 `fetch` 가 아니라 `<script>` 로 불러오므로 파일을 직접 열어도 동작합니다.
 
 ```bash
 open index.html
 # 또는 로컬 서버
 python3 -m http.server 8000
 ```
+
+## 데이터 검증 / 자동 갱신
+
+```bash
+node scripts/validate.mjs   # data.js 무결성 검사 (CI 에서도 실행)
+node scripts/refresh.mjs    # 환율 등 자동 갱신 (data.js 의 meta.rates 갱신)
+```
+
+- `.github/workflows/ci.yml` — push·PR 마다 `validate.mjs` 실행
+- `.github/workflows/refresh.yml` — 매주 + 수동 실행, `refresh.mjs` 로 환율 갱신 후 변경 시 자동 커밋
+- 가격 스크래핑 provider 는 `refresh.mjs` 에 추가 지점을 마련해 뒀으나, 대상 사이트 약관 문제로 아직 비어 있음
 
 ## 데이터에 대한 주의
 
