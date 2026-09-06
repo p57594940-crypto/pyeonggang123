@@ -15,7 +15,7 @@
     usedNote: "중고 시세는 바디 단품·중급 상태 기준 국내 시장 근사치 (UA카메라 등 참고)",
     usersNote: "추정 사용자 수는 제조사 비공개로 인한 대략적 추정치",
     // 아래 rates 는 scripts/refresh.mjs 가 주기적으로 자동 갱신 (무료 no-key 환율 API)
-    rates: {"usdKrw":null,"jpyKrw":null,"asOf":null,"src":"open.er-api.com"}
+    rates: {"usdKrw":1350,"jpyKrw":8.64,"asOf":"Sun, 06 Sep 2026","src":"open.er-api.com"}
   },
 
   fields: ["id","name","brand","type","body","format","mount","year","mon","price","mp","sensor","ibis","iso","af","burstM","burstE","video","evf","lcd","slots","weather","batt","weight","users","conf"],
