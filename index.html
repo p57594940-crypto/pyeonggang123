@@ -1,221 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>카메라 스펙 맞대결</title>
-<meta name="description" content="미러리스·DSLR 카메라 두 대를 브랜드별로 고르거나 검색해 스펙·가격·출시연도·추정 사용자 수를 나란히 비교합니다." />
+<meta name="description" content="미러리스·DSLR·컴팩트 카메라 두 대를 골라 스펙·출시가·중고 시세·출시연도·추정 사용자 수를 나란히 비교합니다." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@500;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" />
 
 <style>
   :root {
-    --bg: #f3f5f7;
+    --bg: #f4f5f7;
     --surface: #ffffff;
-    --surface-2: #eceff2;
-    --ink: #1b1f24;
-    --muted: #626c78;
-    --line: #dce1e7;
-    --line-strong: #c6ccd4;
-    --accent: #0e7c86;
-    --accent-ink: #ffffff;
-    --good: #216c3a;
-    --good-bg: rgba(33, 108, 58, 0.10);
-    --photo: #7a4bd0;
-    --video: #c23a6b;
-    --hybrid: #0e7c86;
-    --shadow: 0 1px 2px rgba(20, 28, 38, 0.06), 0 8px 24px rgba(20, 28, 38, 0.06);
-    --radius: 10px;
+    --surface-2: #f0f1f4;
+    --ink: #1a1e24;
+    --ink-soft: #444b55;
+    --muted: #737d89;
+    --line: #e4e7ec;
+    --line-2: #d3d8df;
+    --accent: #0f7d84;
+    --accent-soft: #e2f1f1;
+    --win: #1a7a44;
+    --win-bg: #e8f4ec;
+    --photo: #6b46c1;
+    --video: #c0396a;
+    --hybrid: #0f7d84;
+    --radius: 14px;
+    --radius-s: 9px;
+    --shadow: 0 1px 2px rgba(20,28,38,.05), 0 6px 20px -6px rgba(20,28,38,.10);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #101215; --surface: #191d21; --surface-2: #232830;
-      --ink: #e9ecef; --muted: #9aa3ae; --line: #2c323a; --line-strong: #3b424b;
-      --accent: #3aaeb8; --accent-ink: #08272a; --good: #62c07e;
-      --good-bg: rgba(98, 192, 126, 0.14);
-      --photo: #b491ef; --video: #ef7ba2; --hybrid: #3aaeb8;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+      --bg: #0e1013;
+      --surface: #17191e;
+      --surface-2: #1f232a;
+      --ink: #e8eaed;
+      --ink-soft: #c2c7cf;
+      --muted: #8b95a1;
+      --line: #282d35;
+      --line-2: #383e48;
+      --accent: #3fb0b8;
+      --accent-soft: #163438;
+      --win: #5cc17d;
+      --win-bg: #16301f;
+      --photo: #b191ee;
+      --video: #ef7ba4;
+      --hybrid: #3fb0b8;
+      --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 28px -8px rgba(0,0,0,.5);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #101215; --surface: #191d21; --surface-2: #232830;
-    --ink: #e9ecef; --muted: #9aa3ae; --line: #2c323a; --line-strong: #3b424b;
-    --accent: #3aaeb8; --accent-ink: #08272a; --good: #62c07e;
-    --good-bg: rgba(98, 192, 126, 0.14);
-    --photo: #b491ef; --video: #ef7ba2; --hybrid: #3aaeb8;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    --bg: #0e1013; --surface: #17191e; --surface-2: #1f232a;
+    --ink: #e8eaed; --ink-soft: #c2c7cf; --muted: #8b95a1;
+    --line: #282d35; --line-2: #383e48;
+    --accent: #3fb0b8; --accent-soft: #163438;
+    --win: #5cc17d; --win-bg: #16301f;
+    --photo: #b191ee; --video: #ef7ba4; --hybrid: #3fb0b8;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 10px 28px -8px rgba(0,0,0,.5);
   }
 
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
     font-family: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     line-height: 1.6; -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 1020px; margin: 0 auto; padding: 32px 20px 72px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 30px 18px 80px; }
 
-  header.masthead {
-    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-    gap: 8px 16px; padding-bottom: 18px; border-bottom: 2px solid var(--line-strong);
-  }
+  /* header */
+  .masthead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
   .masthead h1 {
     font-family: "Gothic A1", sans-serif; font-weight: 800;
-    font-size: clamp(1.5rem, 4vw, 2.1rem); letter-spacing: -0.02em; margin: 0;
-    text-wrap: balance;
+    font-size: clamp(1.35rem, 3.4vw, 1.8rem); letter-spacing: -0.02em; margin: 0;
   }
-  .masthead p { margin: 0; color: var(--muted); font-size: 0.9rem; max-width: 44ch; }
-  .count { color: var(--accent); font-weight: 600; }
+  .masthead .db { font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lede { margin: 0 0 22px; color: var(--muted); font-size: .88rem; max-width: 52ch; }
 
   /* filter bar */
-  .filters { margin: 22px 0 18px; display: flex; flex-direction: column; gap: 12px; }
+  .filters { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
   .search {
-    display: flex; align-items: center; gap: 8px;
-    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
-    padding: 8px 16px; box-shadow: var(--shadow);
+    display: flex; align-items: center; gap: 9px;
+    background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px;
+    padding: 9px 15px;
   }
+  .search:focus-within { border-color: var(--accent); }
   .search svg { flex: none; color: var(--muted); }
   .search input {
     border: 0; background: transparent; color: var(--ink); font-family: inherit;
-    font-size: 0.95rem; width: 100%; outline: none;
+    font-size: .95rem; width: 100%; outline: none;
   }
   .search input::placeholder { color: var(--muted); }
   .search button {
     border: 0; background: transparent; color: var(--muted); cursor: pointer;
-    font-size: 1.1rem; line-height: 1; padding: 0 2px;
+    font-size: 1.15rem; line-height: 1; padding: 0 2px;
   }
   .brands { display: flex; flex-wrap: wrap; gap: 6px; }
   .brands button {
-    font-family: "IBM Plex Sans KR", sans-serif; font-size: 0.82rem; font-weight: 500;
-    color: var(--muted); background: var(--surface); border: 1px solid var(--line);
-    border-radius: 999px; padding: 4px 12px; cursor: pointer;
+    font: 500 .8rem/1 "IBM Plex Sans KR", sans-serif;
+    color: var(--muted); background: transparent; border: 1px solid var(--line-2);
+    border-radius: 999px; padding: 6px 12px; cursor: pointer; transition: all .12s;
   }
-  .brands button:hover { border-color: var(--line-strong); color: var(--ink); }
-  .brands button[aria-pressed="true"] {
-    background: var(--ink); color: var(--bg); border-color: var(--ink);
-  }
+  .brands button:hover { color: var(--ink); border-color: var(--muted); }
+  .brands button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
   /* pickers */
-  .pickers {
-    display: grid; grid-template-columns: 1fr 44px 1fr; gap: 12px;
-    align-items: stretch; margin-bottom: 8px;
-  }
+  .pickers { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 12px; align-items: start; }
   .pick {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-    box-shadow: var(--shadow); padding: 14px; display: flex; flex-direction: column; gap: 6px;
+    background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+    padding: 13px 14px 15px; display: flex; flex-direction: column; gap: 10px;
+    box-shadow: var(--shadow);
   }
-  .pick .tag {
-    font-family: "Gothic A1", sans-serif; font-weight: 700; font-size: 0.7rem;
-    letter-spacing: 0.14em; color: var(--accent);
+  .pick .lab {
+    font: 700 .68rem/1 "Gothic A1", sans-serif; letter-spacing: .16em; color: var(--accent);
   }
   .pick select {
-    font-family: inherit; font-size: 1rem; font-weight: 600; color: var(--ink);
-    background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px;
-    padding: 9px 32px 9px 10px; width: 100%; cursor: pointer; appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 10px center;
+    font: 600 .98rem/1.2 "IBM Plex Sans KR", sans-serif; color: var(--ink);
+    background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--radius-s);
+    padding: 10px 34px 10px 11px; width: 100%; cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b95a1' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 11px center;
   }
-  .pick .sub { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .vs {
-    align-self: center; display: grid; place-items: center; width: 44px; height: 44px;
-    border-radius: 50%; background: var(--ink); color: var(--bg);
-    font-family: "Gothic A1", sans-serif; font-weight: 800; font-size: 0.8rem;
-  }
-  .swap-row { display: flex; justify-content: center; margin-bottom: 22px; }
-  .swap-row button {
-    font-family: "IBM Plex Sans KR", sans-serif; font-size: 0.82rem; color: var(--muted);
-    background: transparent; border: 1px solid var(--line); border-radius: 999px;
-    padding: 5px 14px; cursor: pointer;
-  }
-  .swap-row button:hover { color: var(--ink); border-color: var(--line-strong); }
+  .pick select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .idcard { display: flex; flex-direction: column; gap: 7px; }
+  .idcard .badges { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .idcard .kv { display: flex; justify-content: space-between; gap: 8px; font-size: .82rem; }
+  .idcard .kv dt { color: var(--muted); }
+  .idcard .kv dd { margin: 0; font-family: "IBM Plex Mono", monospace; font-weight: 500; font-variant-numeric: tabular-nums; text-align: right; }
 
-  /* summary tiles */
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
-  @media (max-width: 760px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
-  .tile h3 { margin: 0 0 10px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); }
-  .tile .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .tile .v {
-    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 0.98rem;
-    font-variant-numeric: tabular-nums;
+  .chip {
+    display: inline-block; font: 600 .7rem/1.5 "IBM Plex Sans KR", sans-serif;
+    padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--ink-soft);
   }
-  .tile .n { font-size: 0.72rem; color: var(--muted); font-family: "IBM Plex Sans KR", sans-serif; font-weight: 400; }
-
-  /* type pill */
-  .pill {
-    display: inline-block; font-family: "IBM Plex Sans KR", sans-serif; font-size: 0.7rem;
-    font-weight: 600; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor;
-    vertical-align: middle;
-  }
+  .pill { display: inline-block; font: 600 .7rem/1.5 "IBM Plex Sans KR", sans-serif; padding: 1px 8px; border-radius: 999px; border: 1px solid currentColor; }
   .pill.사진 { color: var(--photo); }
   .pill.영상 { color: var(--video); }
   .pill.하이브리드 { color: var(--hybrid); }
 
-  /* comparison table */
-  .cmp {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-    box-shadow: var(--shadow); overflow: hidden;
+  .vs {
+    align-self: center; margin-top: 46px;
+    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--line-2);
+    font: 800 .72rem/1 "Gothic A1", sans-serif; color: var(--muted);
   }
-  .cmp .head {
-    display: grid; grid-template-columns: 1fr 128px 1fr;
-    background: var(--surface-2); border-bottom: 1px solid var(--line-strong);
+  .toolbar { display: flex; justify-content: center; gap: 8px; margin: 14px 0 24px; }
+  .toolbar button {
+    font: 500 .82rem/1 "IBM Plex Sans KR", sans-serif; color: var(--muted);
+    background: transparent; border: 1px solid var(--line-2); border-radius: 999px;
+    padding: 7px 15px; cursor: pointer;
   }
-  .cmp .head div {
-    padding: 12px 14px; font-family: "Gothic A1", sans-serif; font-weight: 700; font-size: 0.92rem;
-  }
-  .cmp .head .mid { text-align: center; color: var(--muted); font-size: 0.75rem; align-self: center; }
-  .cmp .head .r { text-align: right; }
+  .toolbar button:hover { color: var(--ink); border-color: var(--muted); }
 
-  .grp {
-    padding: 9px 14px; background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-    border-bottom: 1px solid var(--line); border-top: 1px solid var(--line);
-    font-family: "Gothic A1", sans-serif; font-weight: 700; font-size: 0.76rem;
-    letter-spacing: 0.06em; color: var(--accent);
+  /* key-difference band */
+  .keydiff {
+    background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+    padding: 14px 16px; margin-bottom: 16px; box-shadow: var(--shadow);
   }
-  .row { display: grid; grid-template-columns: 1fr 128px 1fr; border-bottom: 1px solid var(--line); }
-  .row:last-child { border-bottom: none; }
-  .row > div { padding: 10px 14px; min-width: 0; }
-  .row .lbl {
-    text-align: center; align-self: center; font-size: 0.78rem; color: var(--muted);
-    background: var(--surface-2);
-  }
-  .row .val {
-    font-family: "IBM Plex Mono", monospace; font-size: 0.88rem; font-weight: 500;
-    font-variant-numeric: tabular-nums; word-break: keep-all;
-    display: flex; align-items: baseline; gap: 7px;
-  }
-  .row .val.right { justify-content: flex-end; text-align: right; flex-direction: row-reverse; }
-  .row .val .txt { font-family: "IBM Plex Sans KR", sans-serif; font-weight: 500; }
-  .row .val.better { color: var(--good); font-weight: 600; background: var(--good-bg); }
-  .row .val.better .flag {
-    font-family: "IBM Plex Sans KR", sans-serif; font-size: 0.66rem; font-weight: 600;
-    color: var(--good); border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; flex: none;
-  }
+  .keydiff h2 { margin: 0 0 10px; font: 700 .72rem/1 "Gothic A1", sans-serif; letter-spacing: .1em; color: var(--muted); }
+  .keydiff ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .keydiff li { display: flex; gap: 9px; align-items: baseline; font-size: .9rem; }
+  .keydiff li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 6px; border-radius: 50%; background: var(--accent); }
+  .keydiff li b { font-weight: 600; }
+  .keydiff .same { color: var(--muted); font-size: .88rem; }
 
-  .foot { margin-top: 22px; font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
-  .foot b { color: var(--ink); font-weight: 600; }
+  /* summary tiles */
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 22px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 12px 13px; }
+  .tile h3 { margin: 0 0 9px; font-size: .72rem; font-weight: 600; color: var(--muted); }
+  .tile .pair { display: grid; gap: 7px; }
+  .tile .val { font: 600 .92rem/1.25 "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+  .tile .val.w { color: var(--win); }
+  .tile .who { font-size: .7rem; color: var(--muted); }
+  .tile .delta { margin-top: 3px; font-size: .72rem; color: var(--muted); }
 
-  @media (max-width: 680px) {
+  /* comparison */
+  .cmp { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .cmp .chead {
+    display: grid; grid-template-columns: 1fr 118px 1fr; align-items: center;
+    padding: 13px 15px; border-bottom: 1px solid var(--line-2); gap: 8px;
+  }
+  .cmp .chead .nm { font: 700 .9rem/1.3 "Gothic A1", sans-serif; }
+  .cmp .chead .nm.r { text-align: right; }
+  .cmp .chead .mid { text-align: center; font-size: .72rem; color: var(--muted); }
+
+  .grp { padding: 10px 15px 6px; font: 700 .7rem/1 "Gothic A1", sans-serif; letter-spacing: .09em; color: var(--muted); }
+  .row { display: grid; grid-template-columns: 1fr 118px 1fr; border-top: 1px solid var(--line); }
+  .grp + .row { border-top: none; }
+  .row > div { padding: 9px 15px; min-width: 0; }
+  .row .lbl { text-align: center; align-self: center; font-size: .77rem; color: var(--muted); }
+  .row .v {
+    font: 500 .87rem/1.35 "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums;
+    word-break: keep-all; display: flex; gap: 6px; align-items: baseline;
+  }
+  .row .v.r { justify-content: flex-end; text-align: right; flex-direction: row-reverse; }
+  .row .v .t { font-family: "IBM Plex Sans KR", sans-serif; font-weight: 500; }
+  .row .v.win { color: var(--win); font-weight: 600; }
+  .row .v.win::after { content: "▲"; font-size: .58rem; color: var(--win); transform: translateY(-1px); }
+  .row .v.r.win::after { order: 2; }
+  .row.hl { background: var(--surface-2); }
+
+  .foot { margin-top: 20px; font-size: .77rem; color: var(--muted); line-height: 1.75; }
+  .foot p { margin: 0 0 7px; }
+  .foot b { color: var(--ink-soft); font-weight: 600; }
+  .foot a { color: var(--accent); }
+
+  @media (max-width: 700px) {
     .pickers { grid-template-columns: 1fr; }
     .vs { display: none; }
-    .tiles { grid-template-columns: 1fr; }
-    .cmp .head { display: none; }
-    .row { grid-template-columns: 1fr 1fr; grid-template-areas: "lbl lbl" "l r"; }
-    .row .lbl { grid-area: lbl; text-align: left; font-weight: 600; }
-    .row .val { font-size: 0.84rem; }
-    .row .val.right { flex-direction: row; justify-content: flex-start; text-align: left; }
+    .tiles { grid-template-columns: 1fr 1fr; }
+    .cmp .chead { grid-template-columns: 1fr 1fr; }
+    .cmp .chead .mid { display: none; }
+    .cmp .chead .nm.r { text-align: right; }
+    .row { grid-template-columns: 1fr 1fr; grid-template-areas: "l l" "a b"; }
+    .row .lbl { grid-area: l; text-align: left; font-weight: 600; color: var(--ink-soft); padding-bottom: 3px; }
+    .row .v { font-size: .84rem; }
+    .row .v.r { flex-direction: row; justify-content: flex-start; text-align: left; }
+    .row .v.r.win::after { order: 0; }
   }
-  @media (prefers-reduced-motion: no-preference) { .row .val { transition: background-color .15s ease; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .row .v, .brands button { transition: background-color .12s, color .12s, border-color .12s; }
+  }
 </style>
-
+</head>
+<body>
 <div class="wrap">
-  <header class="masthead">
-    <div>
-      <h1>카메라 스펙 맞대결</h1>
-      <p style="margin-top:6px">두 대를 골라 스펙·출시가·중고 시세·출시연도·추정 사용자 수를 나란히 봅니다. 현재 <span class="count" id="total">0</span>종 수록.</p>
-    </div>
-  </header>
+  <div class="masthead">
+    <h1>카메라 스펙 맞대결</h1>
+    <span class="db">수록 <b id="total">0</b>종 · 갱신 <span id="updated">—</span></span>
+  </div>
+  <p class="lede">비교할 카메라 두 대를 고르면 스펙·출시가·중고 시세·출시연도·추정 사용자 수를 나란히 보여줍니다.</p>
 
   <div class="filters">
     <div class="search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input id="q" type="search" placeholder="모델명 검색 (예: a7, R6, X-T)" aria-label="카메라 검색" />
+      <input id="q" type="search" placeholder="모델명 검색 (예: a7, R6, X-T, 니콘)" aria-label="카메라 검색" autocomplete="off" />
       <button id="qClear" type="button" title="지우기" hidden>&times;</button>
     </div>
     <div class="brands" id="brands"></div>
@@ -223,26 +242,35 @@
 
   <div class="pickers">
     <div class="pick">
-      <span class="tag">카메라 A</span>
+      <span class="lab">카메라 A</span>
       <select id="selA" aria-label="카메라 A 선택"></select>
-      <span class="sub" id="subA"></span>
+      <dl class="idcard" id="cardA"></dl>
     </div>
     <div class="vs">VS</div>
     <div class="pick">
-      <span class="tag">카메라 B</span>
+      <span class="lab">카메라 B</span>
       <select id="selB" aria-label="카메라 B 선택"></select>
-      <span class="sub" id="subB"></span>
+      <dl class="idcard" id="cardB"></dl>
     </div>
   </div>
-  <div class="swap-row"><button id="swap" type="button">↔ 좌우 바꾸기</button></div>
+
+  <div class="toolbar">
+    <button id="swap" type="button">↔ 좌우 바꾸기</button>
+    <button id="viewToggle" type="button" aria-pressed="false">전체 항목 보기</button>
+  </div>
+
+  <div class="keydiff" id="keydiff" hidden>
+    <h2>핵심 차이</h2>
+    <ul id="keydiffList"></ul>
+  </div>
 
   <div class="tiles" id="tiles"></div>
 
   <div class="cmp">
-    <div class="head">
-      <div class="l" id="hA">—</div>
+    <div class="chead">
+      <div class="nm" id="hA">—</div>
       <div class="mid">항목</div>
-      <div class="r" id="hB">—</div>
+      <div class="nm r" id="hB">—</div>
     </div>
     <div id="rows"></div>
   </div>
@@ -250,209 +278,79 @@
   <div class="foot" id="foot"></div>
 </div>
 
+<script src="data.js"></script>
 <script>
 (function () {
   "use strict";
+  var DB = window.CAMERA_DB;
+  if (!DB) { document.getElementById("rows").textContent = "데이터를 불러오지 못했습니다 (data.js)."; return; }
 
-  var F = ["id","name","brand","type","body","format","mount","year","mon","price","mp","sensor","ibis","iso","af","burstM","burstE","video","evf","lcd","slots","weather","batt","weight","users","conf"];
-
-  // 데이터: 2026년 초 기준. 가격은 국내 출시가(원, 바디)이며 구형은 환산 근사치.
-  // users = 전 세계 추정 사용자(판매) 수, conf = 추정 신뢰도(높음/중간/낮음)
-  var RAW = [
-["sony-a7iii","소니 α7 III","소니","하이브리드","미러리스","풀프레임","소니 E",2018,2,2498000,24,"BSI CMOS","5축 5.0스톱",51200,"693점 위상차",10,10,"4K 30p","236만 0.78x","3.0 92만 틸트","SD 듀얼(1 UHS-II)","방진방적",710,650,1500000,"중간"],
-["sony-a7iv","소니 α7 IV","소니","하이브리드","미러리스","풀프레임","소니 E",2021,10,3180000,33,"BSI CMOS","5축 5.5스톱",51200,"759점 위상차",10,10,"4K 60p(S35)","369만 0.78x","3.0 103만 배리앵글","CFe-A+SD 듀얼","방진방적",580,658,500000,"낮음"],
-["sony-a7r5","소니 α7R V","소니","사진","미러리스","풀프레임","소니 E",2022,11,4890000,61,"BSI CMOS","5축 8.0스톱",51200,"693점 + AI",10,10,"8K 24p / 4K 60p","944만 0.90x","3.2 209만 4축틸트","CFe-A+SD 듀얼","방진방적",530,723,90000,"낮음"],
-["sony-a7r4","소니 α7R IV","소니","사진","미러리스","풀프레임","소니 E",2019,7,4190000,61,"BSI CMOS","5축 5.5스톱",32000,"567점 위상차",10,10,"4K 30p","576만 0.78x","3.0 144만 틸트","SD 듀얼 UHS-II","방진방적",670,665,150000,"낮음"],
-["sony-a7s3","소니 α7S III","소니","영상","미러리스","풀프레임","소니 E",2020,7,4680000,12,"BSI CMOS","5축 5.5스톱",102400,"759점 위상차",10,10,"4K 120p / 10bit","944만 0.90x","3.0 144만 배리앵글","CFe-A+SD 듀얼","방진방적",600,699,120000,"낮음"],
-["sony-a1","소니 α1","소니","하이브리드","미러리스","풀프레임","소니 E",2021,3,8900000,50,"적층 CMOS","5축 5.5스톱",32000,"759점 위상차",30,30,"8K 30p / 4K 120p","944만 0.90x","3.0 144만 틸트","CFe-A+SD 듀얼","방진방적",530,737,60000,"낮음"],
-["sony-a9iii","소니 α9 III","소니","사진","미러리스","풀프레임","소니 E",2023,11,8300000,25,"적층 글로벌셔터","5축 8.0스톱",25600,"759점 위상차",0,120,"4K 120p","944만 0.90x","3.0 210만 4축틸트","CFe-A+SD 듀얼","방진방적",530,703,30000,"낮음"],
-["canon-r1","캐논 EOS R1","캐논","사진","미러리스","풀프레임","캐논 RF",2024,10,9900000,24,"적층 CMOS","5축 8.5스톱",102400,"듀얼픽셀 II + 시선",12,40,"6K 60p RAW / 4K 120p","944만 0.90x","3.2 210만 배리앵글","CFe-B 듀얼","방진방적",700,1115,15000,"낮음"],
-["canon-r8","캐논 EOS R8","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2023,2,1890000,24,"CMOS","없음(전자식)",102400,"1053존 듀얼픽셀",6,40,"4K 60p(크롭)","236만 0.70x","3.0 162만 배리앵글","SD 싱글 UHS-II","간이 실링",290,461,130000,"낮음"],
-["canon-r7","캐논 EOS R7","캐논","사진","미러리스","APS-C","캐논 RF",2022,6,2190000,33,"CMOS","5축 7.0스톱",32000,"651존 듀얼픽셀",15,30,"4K 60p 오버샘플","236만 0.72x","3.0 162만 배리앵글","SD 듀얼 UHS-II","방진방적",500,612,200000,"낮음"],
-["canon-r10","캐논 EOS R10","캐논","하이브리드","미러리스","APS-C","캐논 RF",2022,7,1190000,24,"CMOS","없음(전자식)",32000,"651존 듀얼픽셀",15,23,"4K 60p(크롭)","236만 0.59x","3.0 104만 배리앵글","SD 싱글 UHS-II","간이 실링",430,429,250000,"낮음"],
-["canon-r50","캐논 EOS R50","캐논","하이브리드","미러리스","APS-C","캐논 RF",2023,2,899000,24,"CMOS","없음(전자식)",32000,"651존 듀얼픽셀",12,15,"4K 30p 오버샘플","236만 0.59x","3.0 162만 배리앵글","SD 싱글 UHS-I","없음",370,375,300000,"낮음"],
-["canon-5d4","캐논 EOS 5D Mark IV","캐논","사진","DSLR","풀프레임","캐논 EF",2016,9,4160000,30,"CMOS(듀얼픽셀)","없음",32000,"61점 위상차(OVF)",7,0,"4K 30p(크롭)","광학 펜타프리즘 0.71x","3.2 162만 고정 터치","CF+SD 듀얼","방진방적",900,890,800000,"낮음"],
-["canon-5d3","캐논 EOS 5D Mark III","캐논","사진","DSLR","풀프레임","캐논 EF",2012,3,3600000,22,"CMOS","없음",25600,"61점 위상차(OVF)",6,0,"1080 30p","광학 펜타프리즘 0.71x","3.2 104만 고정","CF+SD 듀얼","방진방적",860,950,1000000,"낮음"],
-["canon-6d2","캐논 EOS 6D Mark II","캐논","사진","DSLR","풀프레임","캐논 EF",2017,7,2340000,26,"CMOS(듀얼픽셀)","없음",40000,"45점 위상차(OVF)",6,0,"1080 60p","광학 펜타프리즘 0.71x","3.0 104만 배리앵글 터치","SD 싱글 UHS-I","간이 실링",765,765,500000,"낮음"],
-["canon-90d","캐논 EOS 90D","캐논","사진","DSLR","APS-C","캐논 EF-S",2019,9,1500000,33,"CMOS(듀얼픽셀)","없음",25600,"45점 위상차(OVF)",10,11,"4K 30p","광학 펜타프리즘 0.60x","3.0 104만 배리앵글 터치","SD 싱글 UHS-II","간이 실링",1300,701,400000,"낮음"],
-["nikon-z9","니콘 Z9","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2021,12,7700000,46,"적층 BSI CMOS","5축 6.0스톱",25600,"493점(전면) 위상차",0,120,"8K 60p / 4K 120p","369만 0.80x","3.2 209만 4축틸트","CFe-B 듀얼","방진방적",700,1340,60000,"낮음"],
-["nikon-z8","니콘 Z8","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2023,5,5990000,46,"적층 BSI CMOS","5축 6.0스톱",25600,"493점 위상차",0,120,"8K 60p / 4K 120p","369만 0.80x","3.2 209만 4축틸트","CFe-B+SD 듀얼","방진방적",340,910,120000,"낮음"],
-["nikon-z6ii","니콘 Z6 II","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2020,10,2790000,24,"BSI CMOS","5축 5.0스톱",51200,"273점 위상차",14,14,"4K 60p(1.5x 크롭)","369만 0.80x","3.2 210만 틸트","CFe-B+SD 듀얼","방진방적",410,705,250000,"낮음"],
-["nikon-z6iii","니콘 Z6 III","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2024,6,3690000,24.5,"부분 적층형 CMOS","5축 8.0스톱",64000,"273점 위상차",14,60,"6K 60p N-RAW / 4K 120p","576만 0.80x","3.2 210만 배리앵글","CFe-B+SD 듀얼","방진방적",380,760,90000,"낮음"],
-["nikon-z7ii","니콘 Z7 II","니콘","사진","미러리스","풀프레임","니콘 Z",2020,10,4290000,46,"BSI CMOS","5축 5.0스톱",25600,"493점 위상차",10,10,"4K 60p(크롭)","369만 0.80x","3.2 210만 틸트","CFe-B+SD 듀얼","방진방적",420,705,100000,"낮음"],
-["nikon-zf","니콘 Zf","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2023,9,2750000,24.5,"BSI CMOS","5축 8.0스톱",64000,"299점 위상차",14,30,"4K 30p 오버샘플 / 4K 60p(DX)","369만 0.80x","3.2 210만 배리앵글","SD UHS-II + microSD","방진방적",380,710,130000,"낮음"],
-["nikon-zfc","니콘 Zfc","니콘","사진","미러리스","APS-C","니콘 Z",2021,7,1350000,20.9,"CMOS","없음",51200,"209점 위상차",11,11,"4K 30p","236만 0.68x","3.0 104만 배리앵글","SD 싱글 UHS-I","없음",300,445,250000,"낮음"],
-["nikon-z50ii","니콘 Z50 II","니콘","하이브리드","미러리스","APS-C","니콘 Z",2024,11,1290000,20.9,"CMOS","없음(전자식)",51200,"209점 위상차 + 인식",11,30,"4K 60p(크롭) / 4K 30p","236만 0.68x","3.2 104만 배리앵글","SD 싱글 UHS-II","간이 실링",230,550,100000,"낮음"],
-["nikon-z5","니콘 Z5","니콘","사진","미러리스","풀프레임","니콘 Z",2020,8,2090000,24,"CMOS","5축 5.0스톱",51200,"273점 위상차",4.5,4.5,"4K 30p(1.7x 크롭)","369만 0.80x","3.2 104만 틸트","SD 듀얼 UHS-II","방진방적",470,675,300000,"낮음"],
-["nikon-z5ii","니콘 Z5 II","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2025,4,2490000,24.5,"BSI CMOS","5축 7.5스톱",64000,"273점 위상차 + 인식",14,30,"4K 30p 오버샘플 / 4K 60p(크롭)","369만 0.80x","3.2 210만 배리앵글","SD 듀얼 UHS-II","방진방적",380,700,60000,"낮음"],
-["nikon-d850","니콘 D850","니콘","사진","DSLR","풀프레임","니콘 F",2017,8,4290000,46,"BSI CMOS","없음",25600,"153점 위상차(OVF)",7,0,"4K 30p","광학 펜타프리즘 0.75x","3.2 236만 틸트 터치","CFe/XQD+SD 듀얼","방진방적",1005,1005,500000,"낮음"],
-["nikon-d780","니콘 D780","니콘","사진","DSLR","풀프레임","니콘 F",2020,1,3190000,24,"BSI CMOS","없음",51200,"51점(OVF) / 273점(LV)",7,12,"4K 30p","광학 펜타프리즘 0.70x","3.2 236만 틸트 터치","SD 듀얼 UHS-II","방진방적",800,840,200000,"낮음"],
-["nikon-d750","니콘 D750","니콘","사진","DSLR","풀프레임","니콘 F",2014,9,2790000,24,"CMOS","없음",25600,"51점 위상차(OVF)",6.5,0,"1080 60p","광학 펜타프리즘 0.70x","3.2 123만 틸트","SD 듀얼","방진방적",840,840,900000,"낮음"],
-["sony-a7c2","소니 α7C II","소니","하이브리드","미러리스","풀프레임","소니 E",2023,8,2790000,33,"BSI CMOS","5축 7.0스톱",51200,"759점 + AI",10,10,"4K 60p(크롭)","236만 0.70x","3.0 103만 배리앵글","SD 싱글 UHS-II","방진방적",540,514,150000,"낮음"],
-["sony-a7cr","소니 α7C R","소니","사진","미러리스","풀프레임","소니 E",2023,8,3690000,61,"BSI CMOS","5축 7.0스톱",51200,"693점 + AI",8,8,"4K 60p(크롭)","236만 0.70x","3.0 103만 배리앵글","SD 싱글 UHS-II","방진방적",530,515,35000,"낮음"],
-["sony-fx3","소니 FX3","소니","영상","미러리스","풀프레임","소니 E",2021,2,4790000,12,"BSI CMOS","5축 5.5스톱",102400,"759점 위상차",10,10,"4K 120p / 10bit","-","3.0 144만 배리앵글","CFe-A+SD 듀얼","방진방적",600,715,45000,"낮음"],
-["sony-zve1","소니 ZV-E1","소니","영상","미러리스","풀프레임","소니 E",2023,3,3190000,12,"BSI CMOS","5축 5.0스톱 + AI",102400,"759점 위상차",10,10,"4K 120p(업데이트)","-","3.0 92만 배리앵글","SD 싱글 UHS-II","없음",570,483,60000,"낮음"],
-["sony-a6000","소니 α6000","소니","사진","미러리스","APS-C","소니 E",2014,2,850000,24,"CMOS","없음",25600,"179점 위상차",11,11,"1080 60p","144만 0.70x","3.0 92만 틸트","SD 싱글","없음",360,344,2000000,"중간"],
-["sony-a6400","소니 α6400","소니","하이브리드","미러리스","APS-C","소니 E",2019,1,1198000,24,"CMOS","없음",32000,"425점 위상차",11,11,"4K 30p","236만 0.70x","3.0 92만 180틸트","SD 싱글 UHS-I","없음",410,403,700000,"낮음"],
-["sony-a6700","소니 α6700","소니","하이브리드","미러리스","APS-C","소니 E",2023,7,1890000,26,"BSI CMOS","5축 5.0스톱",32000,"759점 + AI",11,11,"4K 120p(크롭)","236만 0.71x","3.0 104만 배리앵글","SD 싱글 UHS-II","방진방적",570,493,150000,"낮음"],
-["sony-zve10","소니 ZV-E10","소니","영상","미러리스","APS-C","소니 E",2021,7,899000,24,"CMOS","없음(전자식)",32000,"425점 위상차",11,11,"4K 30p","-","3.0 92만 배리앵글","SD 싱글 UHS-I","없음",440,343,600000,"낮음"],
-["canon-r5","캐논 EOS R5","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2020,7,4990000,45,"CMOS","5축 8.0스톱",51200,"1053존 듀얼픽셀",12,20,"8K 30p / 4K 120p","576만 0.76x","3.2 210만 배리앵글","CFe-B+SD 듀얼","방진방적",320,738,400000,"낮음"],
-["canon-r5m2","캐논 EOS R5 Mark II","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2024,7,5490000,45,"적층 CMOS","5축 8.5스톱",51200,"듀얼픽셀 II + 시선",12,30,"8K 60p / 4K 120p","576만 0.76x","3.2 210만 배리앵글","CFe-B+SD 듀얼","방진방적",340,746,60000,"낮음"],
-["canon-r6","캐논 EOS R6","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2020,7,3390000,20,"CMOS","5축 8.0스톱",102400,"1053존 듀얼픽셀",12,20,"4K 60p(크롭)","369만 0.76x","3.0 162만 배리앵글","SD 듀얼 UHS-II","방진방적",360,680,350000,"낮음"],
-["canon-r6m2","캐논 EOS R6 Mark II","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2022,11,3190000,24,"CMOS","5축 8.0스톱",102400,"1053존 듀얼픽셀",12,40,"4K 60p 오버샘플","369만 0.76x","3.0 162만 배리앵글","SD 듀얼 UHS-II","방진방적",580,670,250000,"낮음"],
-["canon-r3","캐논 EOS R3","캐논","사진","미러리스","풀프레임","캐논 RF",2021,9,7480000,24,"적층 BSI CMOS","5축 8.0스톱",102400,"1053존 + 시선",12,30,"6K RAW / 4K 120p","576만 0.76x","3.2 415만 배리앵글","CFe-B+SD 듀얼","방진방적",440,1015,45000,"낮음"],
-["fuji-xt5","후지필름 X-T5","후지필름","사진","미러리스","APS-C","후지필름 X",2022,11,2590000,40.2,"X-Trans CMOS 5 HR","5축 7.0스톱",12800,"425점 위상차 + 인식",15,20,"6.2K 30p / 4K 60p","369만 0.80x","3.0 184만 3방향 틸트","SD 듀얼 UHS-II","방진방적",580,557,250000,"낮음"],
-["fuji-xt4","후지필름 X-T4","후지필름","하이브리드","미러리스","APS-C","후지필름 X",2020,2,2390000,26,"X-Trans CMOS 4","5축 6.5스톱",12800,"425점 위상차",15,20,"4K 60p / 10bit","369만 0.75x","3.0 162만 배리앵글","SD 듀얼 UHS-II","방진방적",500,607,400000,"낮음"],
-["fuji-xh2","후지필름 X-H2","후지필름","사진","미러리스","APS-C","후지필름 X",2022,9,2890000,40.2,"X-Trans CMOS 5 HR","5축 7.0스톱",12800,"425점 위상차 + 인식",15,20,"8K 30p / 4K 60p","576만 0.80x","3.0 162만 배리앵글","CFe-B+SD 듀얼","방진방적",680,660,90000,"낮음"],
-["fuji-xh2s","후지필름 X-H2S","후지필름","영상","미러리스","APS-C","후지필름 X",2022,7,3190000,26,"적층 X-Trans CMOS 5 HS","5축 7.0스톱",12800,"425점 위상차 + 인식",15,40,"6.2K 30p / 4K 120p","576만 0.80x","3.0 162만 배리앵글","CFe-B+SD 듀얼","방진방적",720,660,70000,"낮음"],
-["fuji-xs20","후지필름 X-S20","후지필름","하이브리드","미러리스","APS-C","후지필름 X",2023,5,1790000,26,"X-Trans CMOS 4","5축 7.0스톱",12800,"425점 위상차 + 인식",8,20,"6.2K 30p / 4K 60p","236만 0.62x","3.0 184만 배리앵글","SD 싱글 UHS-II","없음",750,491,200000,"낮음"],
-["fuji-xt50","후지필름 X-T50","후지필름","하이브리드","미러리스","APS-C","후지필름 X",2024,5,2090000,40.2,"X-Trans CMOS 5 HR","5축 7.0스톱",12800,"425점 위상차 + 인식",8,20,"6.2K 30p / 4K 60p","236만 0.62x","3.0 184만 틸트","SD 싱글 UHS-II","없음",305,438,150000,"낮음"],
-["fuji-xt30ii","후지필름 X-T30 II","후지필름","하이브리드","미러리스","APS-C","후지필름 X",2021,9,1290000,26,"X-Trans CMOS 4","없음",12800,"425점 위상차",8,20,"4K 30p","236만 0.62x","3.0 162만 틸트","SD 싱글 UHS-I","없음",380,383,250000,"낮음"],
-["fuji-xe4","후지필름 X-E4","후지필름","사진","미러리스","APS-C","후지필름 X",2021,1,1250000,26,"X-Trans CMOS 4","없음",12800,"425점 위상차",8,20,"4K 30p","236만 0.62x","3.0 162만 2방향 틸트","SD 싱글 UHS-I","없음",380,364,120000,"낮음"],
-["fuji-x100vi","후지필름 X100VI","후지필름","하이브리드","컴팩트","APS-C","고정 35mm f2 상당",2024,2,2590000,40.2,"X-Trans CMOS 5 HR","5축 6.0스톱",12800,"425점 위상차 + 인식",11,20,"6.2K 30p / 4K 60p","369만 하이브리드 OVF/EVF","3.0 162만 2방향 틸트","SD 싱글 UHS-I","간이 실링(어댑터)",450,521,600000,"중간"],
-["fuji-gfx100ii","후지필름 GFX 100 II","후지필름","사진","중형미러리스","중형(44x33)","후지필름 G",2023,9,10900000,102,"BSI CMOS(중형)","5축 8.0스톱",12800,"425점 위상차 + 인식",8,8,"8K 30p","944만 0.84x","3.2 210만 3방향 틸트","CFe-B+SD 듀얼","방진방적",540,1030,20000,"낮음"],
-["fuji-gfx100s","후지필름 GFX 100S","후지필름","사진","중형미러리스","중형(44x33)","후지필름 G",2021,1,8500000,102,"BSI CMOS(중형)","5축 6.0스톱",12800,"425점 위상차",5,5,"4K 30p","369만 0.77x","3.2 236만 3방향 틸트","SD 듀얼 UHS-II","방진방적",460,900,35000,"낮음"],
-["fuji-gfx50sii","후지필름 GFX 50S II","후지필름","사진","중형미러리스","중형(44x33)","후지필름 G",2021,9,5500000,51,"CMOS(중형)","5축 6.5스톱",12800,"117점 콘트라스트",3,3,"1080 30p","369만 0.77x","3.2 236만 3방향 틸트","SD 듀얼 UHS-II","방진방적",455,900,30000,"낮음"],
-["pana-s5ii","파나소닉 LUMIX S5 II","파나소닉","하이브리드","미러리스","풀프레임","L 마운트",2023,1,2590000,24,"CMOS","5축 5.0스톱",51200,"779점 위상차 + 인식",9,30,"6K 30p / C4K 60p","368만 0.78x","3.0 184만 배리앵글","SD 듀얼 UHS-II","방진방적",370,740,120000,"낮음"],
-["pana-s5iix","파나소닉 LUMIX S5 IIX","파나소닉","영상","미러리스","풀프레임","L 마운트",2023,5,3090000,24,"CMOS","5축 5.0스톱",51200,"779점 위상차 + 인식",9,30,"6K 30p / ProRes / RAW","368만 0.78x","3.0 184만 배리앵글","SD 듀얼 UHS-II","방진방적",370,740,50000,"낮음"],
-["pana-s1h","파나소닉 LUMIX S1H","파나소닉","영상","미러리스","풀프레임","L 마운트",2019,9,5490000,24,"CMOS","5축 6.5스톱",51200,"225존 콘트라스트(DFD)",9,9,"6K 24p / 4K 60p","576만 0.78x","3.2 233만 틸트+버리앵글","SD 듀얼 UHS-II","방진방적",400,1052,40000,"낮음"],
-["pana-s1","파나소닉 LUMIX S1","파나소닉","하이브리드","미러리스","풀프레임","L 마운트",2019,3,3690000,24,"CMOS","5축 6.0스톱",51200,"225존 콘트라스트(DFD)",9,9,"4K 60p(크롭)","576만 0.78x","3.2 210만 3축 틸트","XQD+SD 듀얼","방진방적",380,1017,90000,"낮음"],
-["pana-s1r","파나소닉 LUMIX S1R","파나소닉","사진","미러리스","풀프레임","L 마운트",2019,3,5490000,47,"CMOS","5축 5.5스톱",25600,"225존 콘트라스트(DFD)",9,9,"4K 60p(크롭)","576만 0.78x","3.2 210만 3축 틸트","XQD+SD 듀얼","방진방적",360,1020,40000,"낮음"],
-["pana-gh6","파나소닉 LUMIX GH6","파나소닉","영상","미러리스","마이크로 포서드","M4/3",2022,2,2790000,25.2,"CMOS","5축 7.5스톱",12800,"315존 콘트라스트(DFD)",14,75,"5.7K 60p / C4K 120p","368만 0.76x","3.0 184만 틸트+버리앵글","CFe-B+SD 듀얼","방진방적",360,823,80000,"낮음"],
-["pana-gh7","파나소닉 LUMIX GH7","파나소닉","영상","미러리스","마이크로 포서드","M4/3",2024,7,3090000,25.2,"CMOS","5축 7.5스톱",12800,"779점 위상차 + 인식",14,75,"5.7K 60p / ProRes RAW 내부","368만 0.76x","3.0 184만 틸트+버리앵글","CFe-B+SD 듀얼","방진방적",360,805,40000,"낮음"],
-["pana-g9ii","파나소닉 LUMIX G9 II","파나소닉","하이브리드","미러리스","마이크로 포서드","M4/3",2023,10,2290000,25.2,"CMOS","5축 8.0스톱",25600,"779점 위상차 + 인식",10,60,"5.8K 30p / C4K 60p","368만 0.80x","3.0 184만 배리앵글","SD 듀얼 UHS-II","방진방적",390,658,50000,"낮음"],
-["om-1","OM SYSTEM OM-1","OM System","하이브리드","미러리스","마이크로 포서드","M4/3",2022,2,2900000,20,"적층 BSI CMOS","5축 7.0스톱",25600,"1053점 크로스 위상차",10,120,"C4K 60p / 4K 60p","576만 0.83x","3.0 162만 배리앵글","SD 듀얼 UHS-II","방진방적(IP53)",520,599,90000,"낮음"],
-["om-1ii","OM SYSTEM OM-1 Mark II","OM System","하이브리드","미러리스","마이크로 포서드","M4/3",2024,1,3190000,20,"적층 BSI CMOS","5축 8.5스톱",25600,"1053점 크로스 위상차",10,120,"C4K 60p / 4K 60p","576만 0.83x","3.0 162만 배리앵글","SD 듀얼 UHS-II","방진방적(IP53)",520,599,35000,"낮음"],
-["om-5","OM SYSTEM OM-5","OM System","사진","미러리스","마이크로 포서드","M4/3",2022,10,1690000,20,"CMOS","5축 6.5스톱",25600,"121점 크로스 위상차",10,30,"C4K 24p / 4K 30p","236만 0.68x","3.0 104만 배리앵글","SD 싱글 UHS-II","방진방적(IP53)",310,414,70000,"낮음"],
-["oly-em1iii","올림푸스 OM-D E-M1 Mark III","OM System","하이브리드","미러리스","마이크로 포서드","M4/3",2020,2,2190000,20,"CMOS","5축 7.0스톱",25600,"121점 크로스 위상차",10,60,"C4K 24p / 4K 30p","236만 0.74x","3.0 104만 배리앵글","SD 듀얼 UHS-II","방진방적(IPX1)",420,580,150000,"낮음"],
-["leica-q3","라이카 Q3","라이카","하이브리드","컴팩트","풀프레임","고정 28mm f1.7",2023,5,8290000,60,"BSI CMOS","광학식 OIS",100000,"315존 콘트라스트+PDAF",15,60,"8K 30p / C4K 60p","576만 0.79x","3.0 184만 틸트","SD 싱글 UHS-II","방진방적",350,743,40000,"낮음"],
-["leica-m11","라이카 M11","라이카","사진","레인지파인더","풀프레임","라이카 M",2022,1,12190000,60,"BSI CMOS","없음",50000,"수동 초점(레인지파인더)",4.5,0,"없음","광학 레인지파인더 0.73x","2.95 233만 고정","SD 싱글 + 내장 64GB","없음",700,530,35000,"낮음"],
-["leica-sl3","라이카 SL3","라이카","하이브리드","미러리스","풀프레임","L 마운트",2024,3,10600000,60,"BSI CMOS","5축 5.0스톱",100000,"위상차 + 인식",5,30,"8K 30p / 4K 60p","576만 0.78x","3.2 231만 틸트","CFe-B+SD 듀얼","방진방적(IP54)",370,769,15000,"낮음"],
-["sigma-fp","시그마 fp","시그마","영상","미러리스","풀프레임","L 마운트",2019,10,2490000,24,"BSI CMOS","없음(전자식)",25600,"49점 콘트라스트",18,18,"4K 30p / CinemaDNG RAW","-","3.15 210만 고정 터치","SD 싱글 UHS-II","방진방적",280,422,25000,"낮음"],
-["sigma-fpl","시그마 fp L","시그마","하이브리드","미러리스","풀프레임","L 마운트",2021,3,3190000,61,"BSI CMOS","없음(전자식)",25600,"49점 하이브리드 PDAF",10,10,"4K 30p / CinemaDNG RAW","-","3.15 210만 고정 터치","SD 싱글 UHS-II","방진방적",280,427,15000,"낮음"],
-["pentax-k3iii","펜탁스 K-3 Mark III","펜탁스","사진","DSLR","APS-C","펜탁스 KAF",2021,3,2790000,25.7,"BSI CMOS","5축 5.5스톱",1600000,"101점 위상차(OVF)",12,0,"4K 30p","광학 펜타프리즘 1.05x","3.2 162만 고정 터치","SD 듀얼 UHS-II","방진방적",820,820,40000,"낮음"],
-["pentax-k1ii","펜탁스 K-1 Mark II","펜탁스","사진","DSLR","풀프레임","펜탁스 KAF",2018,2,3290000,36,"CMOS","5축 5.0스톱",819200,"33점 위상차(OVF)",4.4,0,"1080 60i","광학 펜타프리즘 0.70x","3.2 103만 플렉시블 틸트","SD 듀얼 UHS-I","방진방적",1010,1010,60000,"낮음"],
-["sony-a7ii","소니 α7 II","소니","하이브리드","미러리스","풀프레임","소니 E",2014,11,1990000,24,"CMOS","5축 4.5스톱",25600,"117점 위상차",5,5,"1080 60p","236만 0.71x","3.0 123만 틸트","SD 싱글","없음",350,599,800000,"낮음"],
-["sony-a7c","소니 α7C","소니","하이브리드","미러리스","풀프레임","소니 E",2020,9,2490000,24,"BSI CMOS","5축 5.0스톱",51200,"693점 위상차",10,10,"4K 30p","236만 0.59x","3.0 92만 배리앵글","SD 싱글 UHS-II","방진방적",740,509,250000,"낮음"],
-["sony-a6500","소니 α6500","소니","하이브리드","미러리스","APS-C","소니 E",2016,10,1690000,24,"CMOS","5축 5.0스톱",25600,"425점 위상차",11,11,"4K 30p","236만 0.70x","3.0 92만 틸트","SD 싱글 UHS-I","간이 실링",350,453,400000,"낮음"],
-["sony-rx100m7","소니 RX100 VII","소니","하이브리드","컴팩트","1인치","고정 24-200mm f2.8-4.5",2019,7,1690000,20,"적층 CMOS","광학식 OIS",12800,"357점 위상차",20,90,"4K 30p","236만 팝업 EVF","3.0 92만 틸트","SD 싱글 UHS-I","없음",260,302,500000,"낮음"],
-["sony-zv1m2","소니 ZV-1 II","소니","영상","컴팩트","1인치","고정 18-50mm f1.8-4",2023,5,1090000,20,"CMOS","없음(전자식)",12800,"315점 위상차",0,24,"4K 30p","-","3.0 92만 배리앵글","SD 싱글 UHS-I","없음",260,292,200000,"낮음"],
-["canon-6d","캐논 EOS 6D","캐논","사진","DSLR","풀프레임","캐논 EF",2012,11,2200000,20,"CMOS","없음",25600,"11점 위상차(OVF)",4.5,0,"1080 30p","광학 펜타프리즘 0.71x","3.0 104만 고정","SD 싱글","간이 실링",1090,770,700000,"낮음"],
-["canon-eosr","캐논 EOS R","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2018,10,2990000,30,"CMOS","없음(전자식)",40000,"5655측 듀얼픽셀",8,8,"4K 30p(1.7x 크롭)","369만 0.76x","3.2 210만 배리앵글","SD 싱글 UHS-II","방진방적",370,660,350000,"낮음"],
-["canon-rp","캐논 EOS RP","캐논","하이브리드","미러리스","풀프레임","캐논 RF",2019,2,1590000,26,"CMOS","없음(전자식)",40000,"4779측 듀얼픽셀",5,5,"4K 25p(1.7x 크롭)","236만 0.70x","3.0 104만 배리앵글","SD 싱글 UHS-II","간이 실링",250,485,400000,"낮음"],
-["canon-r100","캐논 EOS R100","캐논","사진","미러리스","APS-C","캐논 RF",2023,5,749000,24,"CMOS","없음",25600,"3975측 듀얼픽셀(정지)",6.5,3.5,"4K 30p(1.6x 크롭)","236만 0.59x","3.0 104만 고정","SD 싱글 UHS-I","없음",370,356,200000,"낮음"],
-["canon-m50m2","캐논 EOS M50 Mark II","캐논","하이브리드","미러리스","APS-C","캐논 EF-M",2020,10,750000,24,"CMOS","없음(전자식)",25600,"143측 듀얼픽셀",10,10,"4K 24p(크롭)","236만 0.62x","3.0 104만 배리앵글","SD 싱글 UHS-I","없음",305,387,600000,"낮음"],
-["canon-80d","캐논 EOS 80D","캐논","사진","DSLR","APS-C","캐논 EF-S",2016,3,1500000,24,"CMOS(듀얼픽셀)","없음",16000,"45점 위상차(OVF)",7,0,"1080 60p","광학 펜타프리즘 0.60x","3.0 104만 배리앵글 터치","SD 싱글 UHS-I","간이 실링",960,730,700000,"낮음"],
-["canon-200d","캐논 EOS 200D II","캐논","사진","DSLR","APS-C","캐논 EF-S",2019,4,700000,24,"CMOS(듀얼픽셀)","없음",25600,"9점 위상차(OVF)",5,0,"4K 24p(크롭)","광학 펜타미러 0.54x","3.0 104만 배리앵글 터치","SD 싱글 UHS-I","없음",1070,449,500000,"낮음"],
-["canon-800d","캐논 EOS 800D","캐논","사진","DSLR","APS-C","캐논 EF-S",2017,2,900000,24,"CMOS(듀얼픽셀)","없음",25600,"45점 위상차(OVF)",6,0,"1080 60p","광학 펜타미러 0.51x","3.0 104만 배리앵글 터치","SD 싱글 UHS-I","없음",600,532,500000,"낮음"],
-["nikon-z6","니콘 Z6","니콘","하이브리드","미러리스","풀프레임","니콘 Z",2018,8,2890000,24.5,"BSI CMOS","5축 5.0스톱",51200,"273점 위상차",12,12,"4K 30p","369만 0.80x","3.2 210만 틸트","XQD 싱글","방진방적",310,675,300000,"낮음"],
-["nikon-z7","니콘 Z7","니콘","사진","미러리스","풀프레임","니콘 Z",2018,8,4590000,45.7,"BSI CMOS","5축 5.0스톱",25600,"493점 위상차",9,9,"4K 30p","369만 0.80x","3.2 210만 틸트","XQD 싱글","방진방적",330,675,150000,"낮음"],
-["nikon-d800","니콘 D800","니콘","사진","DSLR","풀프레임","니콘 F",2012,2,3400000,36,"CMOS","없음",6400,"51점 위상차(OVF)",4,0,"1080 30p","광학 펜타프리즘 0.70x","3.2 92만 고정","CF+SD 듀얼","방진방적",900,1000,400000,"낮음"],
-["nikon-d810","니콘 D810","니콘","사진","DSLR","풀프레임","니콘 F",2014,6,3900000,36,"CMOS","없음",12800,"51점 위상차(OVF)",5,0,"1080 60p","광학 펜타프리즘 0.70x","3.2 123만 고정","CF+SD 듀얼","방진방적",1200,980,400000,"낮음"],
-["nikon-d7100","니콘 D7100","니콘","사진","DSLR","APS-C","니콘 F",2013,2,1400000,24,"CMOS","없음",6400,"51점 위상차(OVF)",6,0,"1080 60i","광학 펜타프리즘 0.63x","3.2 123만 고정","SD 듀얼","간이 실링",950,765,600000,"낮음"],
-["nikon-d4s","니콘 D4S","니콘","사진","DSLR","풀프레임","니콘 F",2014,2,7900000,16,"CMOS","없음",25600,"51점 위상차(OVF)",11,0,"1080 60p","광학 펜타프리즘 0.70x","3.2 92만 고정","CF+XQD 듀얼","방진방적",3020,1350,60000,"낮음"],
-["nikon-d5","니콘 D5","니콘","사진","DSLR","풀프레임","니콘 F",2016,3,8500000,21,"CMOS","없음",102400,"153점 위상차(OVF)",12,14,"4K 30p","광학 펜타프리즘 0.72x","3.2 236만 고정 터치","XQD 듀얼","방진방적",3780,1405,50000,"낮음"],
-["fuji-xt3","후지필름 X-T3","후지필름","하이브리드","미러리스","APS-C","후지필름 X",2018,9,2090000,26,"X-Trans CMOS 4","없음",12800,"425점 위상차",11,30,"4K 60p / 10bit","369만 0.75x","3.0 104만 3방향 틸트","SD 듀얼 UHS-II","방진방적",390,539,350000,"낮음"],
-["fuji-xpro3","후지필름 X-Pro3","후지필름","사진","미러리스","APS-C","후지필름 X",2019,10,2590000,26,"X-Trans CMOS 4","없음",12800,"425점 위상차",11,20,"4K 30p","하이브리드 OVF/EVF 369만","3.0 162만 숨김 틸트","SD 듀얼 UHS-II","방진방적",440,497,120000,"낮음"],
-["fuji-x100v","후지필름 X100V","후지필름","하이브리드","컴팩트","APS-C","고정 35mm f2 상당",2020,2,1790000,26,"X-Trans CMOS 4","없음",12800,"425점 위상차",11,20,"4K 30p","하이브리드 OVF/EVF 369만","3.0 162만 2방향 틸트","SD 싱글 UHS-I","간이 실링(어댑터)",420,478,300000,"낮음"],
-["fuji-x100t","후지필름 X100T","후지필름","사진","컴팩트","APS-C","고정 35mm f2 상당",2014,9,1490000,16,"X-Trans CMOS II","없음",6400,"49점 콘트라스트",6,0,"1080 60p","하이브리드 OVF/EVF 236만","3.0 104만 고정","SD 싱글","없음",330,440,250000,"낮음"],
-["ricoh-gr3","리코 GR III","리코","사진","컴팩트","APS-C","고정 28mm f2.8 상당",2019,3,1290000,24,"CMOS","3축 4.0스톱",102400,"콘트라스트 + 하이브리드 AF",0,4,"1080 60p","-","3.0 104만 고정 터치","SD 싱글 + 내장 2GB","없음",200,257,200000,"낮음"],
-["ricoh-gr3x","리코 GR IIIx","리코","사진","컴팩트","APS-C","고정 40mm f2.8 상당",2021,9,1390000,24,"CMOS","3축 4.0스톱",102400,"콘트라스트 + 하이브리드 AF",0,4,"1080 60p","-","3.0 104만 고정 터치","SD 싱글 + 내장 2GB","없음",200,262,120000,"낮음"],
-["nikon-p1000","니콘 쿨픽스 P1000","니콘","사진","컴팩트","1/2.3인치","고정 24-3000mm 상당",2018,7,1290000,16,"BSI CMOS","렌즈 5.0스톱 VR",6400,"콘트라스트",7,7,"4K 30p","236만 EVF","3.2 92만 배리앵글","SD 싱글 UHS-I","없음",250,1415,150000,"낮음"],
-["canon-v1","캐논 파워샷 V1","캐논","영상","컴팩트","1.4인치","고정 16-50mm f2.8-4.5 상당",2025,3,1290000,22,"CMOS(듀얼픽셀)","없음(전자식)",25600,"듀얼픽셀 CMOS AF",0,30,"4K 30p 오버샘플","-","3.0 104만 배리앵글","SD 싱글 UHS-II","없음",400,426,60000,"낮음"],
-["leica-dlux8","라이카 D-Lux 8","라이카","하이브리드","컴팩트","4/3형","고정 24-75mm f1.7-2.8 상당",2024,7,2190000,17,"CMOS","없음",25600,"콘트라스트",11,11,"C4K 30p","236만 EVF","3.0 184만 고정 터치","SD 싱글 UHS-II","없음",340,397,40000,"낮음"]
-  ];
-
-  var CAMERAS = RAW.map(function (r) {
+  var F = DB.fields;
+  var CAMERAS = DB.cameras.map(function (r) {
     var o = {}; F.forEach(function (k, i) { o[k] = r[i]; }); return o;
   });
+  var USED = DB.used || {};
 
   var BRAND_ORDER = ["소니","캐논","니콘","후지필름","파나소닉","OM System","라이카","시그마","펜탁스","리코"];
 
+  // 항목 정의. core:true 인 항목만 "핵심" 뷰에 표시.
   var GROUPS = [
-    { title: "기본 정보", rows: [
-      { key: "brand", label: "제조사", type: "text" },
-      { key: "typeLabel", label: "성격", type: "text" },
+    { title: "기본", rows: [
+      { key: "releasedLabel", label: "출시 시기", type: "text", core: true },
       { key: "body", label: "형태", type: "text" },
-      { key: "format", label: "센서 포맷", type: "text" },
+      { key: "format", label: "센서 포맷", type: "text", core: true },
       { key: "mount", label: "마운트", type: "text" },
-      { key: "releasedLabel", label: "출시 시기", type: "text" },
-      { key: "price", label: "출시가 (원)", type: "num", better: "low", fmt: "won" },
-      { key: "used", label: "중고 시세 (원)", type: "num", better: "low", fmt: "won", zero: "정보 없음" },
-      { key: "users", label: "추정 사용자 수", type: "num", better: "high", fmt: "people" }
+      { key: "price", label: "출시가", type: "num", better: "low", fmt: "won", core: true },
+      { key: "used", label: "중고 시세", type: "num", better: "low", fmt: "won", zero: "정보 없음", core: true },
+      { key: "users", label: "추정 사용자 수", type: "num", better: "high", fmt: "people", core: true }
     ]},
     { title: "센서 · 이미지", rows: [
-      { key: "mp", label: "유효 화소", type: "num", better: "high", unit: "MP" },
+      { key: "mp", label: "유효 화소", type: "num", better: "high", unit: "MP", core: true },
       { key: "sensor", label: "센서 구조", type: "text" },
-      { key: "ibis", label: "손떨림 보정", type: "text" },
-      { key: "iso", label: "상용 ISO 상한", type: "num", better: "high", fmt: "int" },
-      { key: "af", label: "AF 측거 방식", type: "text" }
+      { key: "ibis", label: "손떨림 보정", type: "text", core: true },
+      { key: "iso", label: "상용 ISO 상한", type: "num", better: "high", fmt: "int", core: true },
+      { key: "af", label: "AF 측거 방식", type: "text", core: true }
     ]},
     { title: "연사 · 동영상", rows: [
+      { key: "burstBest", label: "최고 연사", type: "num", better: "high", unit: "fps", core: true },
       { key: "burstM", label: "연사 · 기계식", type: "num", better: "high", unit: "fps", zero: "-" },
       { key: "burstE", label: "연사 · 전자식", type: "num", better: "high", unit: "fps", zero: "-" },
-      { key: "video", label: "최대 동영상", type: "text" }
+      { key: "video", label: "최대 동영상", type: "text", core: true }
     ]},
     { title: "바디", rows: [
       { key: "evf", label: "뷰파인더", type: "text" },
       { key: "lcd", label: "후면 LCD", type: "text" },
       { key: "slots", label: "카드 슬롯", type: "text" },
-      { key: "weather", label: "방진방적", type: "text" },
-      { key: "batt", label: "배터리 (CIPA)", type: "num", better: "high", unit: "매" },
-      { key: "weight", label: "무게(배터리 포함)", type: "num", better: "low", unit: "g" }
+      { key: "weather", label: "방진방적", type: "text", core: true },
+      { key: "batt", label: "배터리 (CIPA)", type: "num", better: "high", unit: "매", core: true },
+      { key: "weight", label: "무게", type: "num", better: "low", unit: "g", core: true }
     ]}
   ];
 
   var $ = function (s) { return document.querySelector(s); };
   var selA = $("#selA"), selB = $("#selB"), qInput = $("#q");
-  var state = { brand: "전체", q: "" };
+  var state = { brand: "전체", q: "", full: false };
 
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (m) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m];
     });
   }
-  function fmtWon(n) { return "₩" + n.toLocaleString("ko-KR"); }
-  function fmtInt(n) { return n.toLocaleString("ko-KR"); }
-  function fmtPeople(n) {
+  var won = function (n) { return "₩" + Number(n).toLocaleString("ko-KR"); };
+  var int = function (n) { return Number(n).toLocaleString("ko-KR"); };
+  function people(n) {
+    if (!n) return "정보 없음";
     if (n >= 10000) {
       var man = n / 10000;
       var s = man >= 100 ? Math.round(man / 10) * 10 : Math.round(man / 5) * 5;
-      return "약 " + fmtInt(s) + "만 명";
+      return "약 " + int(s) + "만 명";
     }
-    return "약 " + fmtInt(Math.round(n / 1000) * 1000) + "명";
+    return "약 " + int(Math.round(n / 1000) * 1000) + "명";
   }
-  // 국내 중고 시세(원, 바디 단품, 중급 상태 기준 근사치). 2026년 초.
-  // 참고: UA카메라(uacamera.co.kr) 등 중고 매장 시세 + 시장 관측. 실제 거래가는 상태·구성·시점에 따라 크게 다름.
-  var USED = {
-    "sony-a7ii":550000,"sony-a7iii":950000,"sony-a7iv":2000000,"sony-a7r4":1700000,"sony-a7r5":3500000,
-    "sony-a7s3":3300000,"sony-a1":5500000,"sony-a9iii":6500000,"sony-a7c":950000,"sony-a7c2":1650000,
-    "sony-a7cr":2600000,"sony-fx3":3400000,"sony-zve1":1900000,"sony-a6000":250000,"sony-a6400":650000,
-    "sony-a6500":500000,"sony-a6700":1350000,"sony-zve10":500000,"sony-rx100m7":750000,"sony-zv1m2":700000,
-    "canon-r5":2650000,"canon-r5m2":4300000,"canon-r6":1050000,"canon-r6m2":2100000,"canon-r3":3800000,
-    "canon-r1":8000000,"canon-r8":1350000,"canon-r7":1200000,"canon-r10":750000,"canon-r50":650000,
-    "canon-r100":550000,"canon-eosr":950000,"canon-rp":800000,"canon-m50m2":400000,
-    "canon-5d3":550000,"canon-5d4":1050000,"canon-6d":350000,"canon-6d2":650000,"canon-80d":400000,
-    "canon-90d":650000,"canon-200d":300000,"canon-800d":300000,
-    "nikon-z6":850000,"nikon-z7":1200000,"nikon-z6ii":1300000,"nikon-z6iii":2600000,"nikon-z7ii":1900000,
-    "nikon-z8":3800000,"nikon-z9":4200000,"nikon-zf":1900000,"nikon-zfc":700000,"nikon-z5":900000,
-    "nikon-z5ii":1900000,"nikon-z50ii":1000000,"nikon-d750":600000,"nikon-d780":1350000,"nikon-d800":350000,
-    "nikon-d810":650000,"nikon-d850":1850000,"nikon-d7100":275000,"nikon-d4s":1150000,"nikon-d5":2000000,
-    "fuji-xt3":650000,"fuji-xt4":1100000,"fuji-xt5":1900000,"fuji-xt30ii":700000,"fuji-xt50":1600000,
-    "fuji-xh2":1600000,"fuji-xh2s":2300000,"fuji-xs20":1300000,"fuji-xe4":800000,"fuji-xpro3":1400000,
-    "fuji-x100t":850000,"fuji-x100v":1750000,"fuji-x100vi":2600000,"fuji-gfx50sii":3200000,
-    "fuji-gfx100s":5000000,"fuji-gfx100ii":8500000,
-    "pana-s1":900000,"pana-s1r":1500000,"pana-s1h":2200000,"pana-s5ii":1600000,"pana-s5iix":2000000,
-    "pana-gh6":1400000,"pana-gh7":2400000,"pana-g9ii":1400000,
-    "om-1":1600000,"om-1ii":2400000,"om-5":950000,"oly-em1iii":900000,
-    "leica-q3":7000000,"leica-m11":9500000,"leica-sl3":8500000,"leica-dlux8":2450000,
-    "sigma-fp":1200000,"sigma-fpl":1800000,"pentax-k3iii":1500000,"pentax-k1ii":1300000,
-    "ricoh-gr3":1100000,"ricoh-gr3x":1150000,"nikon-p1000":825000,"canon-v1":1050000
-  };
   function derived(c) {
-    c.typeLabel = c.type;
     c.releasedLabel = c.year + "년 " + c.mon + "월";
     c.used = USED[c.id] || 0;
+    c.burstBest = Math.max(Number(c.burstM) || 0, Number(c.burstE) || 0);
     return c;
   }
   CAMERAS.forEach(derived);
@@ -461,7 +359,6 @@
     for (var i = 0; i < CAMERAS.length; i++) if (CAMERAS[i].id === id) return CAMERAS[i];
     return CAMERAS[0];
   }
-
   function matches(c) {
     if (state.brand !== "전체" && c.brand !== state.brand) return false;
     if (state.q) {
@@ -472,21 +369,13 @@
   }
 
   function buildBrands() {
-    var present = BRAND_ORDER.filter(function (b) {
-      return CAMERAS.some(function (c) { return c.brand === b; });
-    });
-    var el = $("#brands");
-    el.innerHTML = "";
+    var present = BRAND_ORDER.filter(function (b) { return CAMERAS.some(function (c) { return c.brand === b; }); });
+    var el = $("#brands"); el.innerHTML = "";
     ["전체"].concat(present).forEach(function (b) {
       var btn = document.createElement("button");
-      btn.type = "button";
-      btn.textContent = b;
+      btn.type = "button"; btn.textContent = b;
       btn.setAttribute("aria-pressed", String(state.brand === b));
-      btn.addEventListener("click", function () {
-        state.brand = b;
-        buildBrands();
-        fillSelects();
-      });
+      btn.addEventListener("click", function () { state.brand = b; buildBrands(); fillSelects(); });
       el.appendChild(btn);
     });
   }
@@ -495,21 +384,17 @@
     [selA, selB].forEach(function (sel) {
       var current = sel.value;
       var list = CAMERAS.filter(matches);
-      // 현재 선택된 항목은 필터에서 빠져도 유지
       if (current && !list.some(function (c) { return c.id === current; })) {
-        var cur = byId(current);
-        if (cur) list = list.concat([cur]);
+        var cur = byId(current); if (cur) list = list.concat([cur]);
       }
       var byBrand = {};
       list.forEach(function (c) { (byBrand[c.brand] = byBrand[c.brand] || []).push(c); });
       var html = "";
       BRAND_ORDER.forEach(function (b) {
         if (!byBrand[b]) return;
-        html += '<optgroup label="' + esc(b) + '">';
         byBrand[b].sort(function (x, y) { return y.year - x.year || x.name.localeCompare(y.name, "ko"); });
-        byBrand[b].forEach(function (c) {
-          html += '<option value="' + c.id + '">' + esc(c.name) + " · " + c.year + "</option>";
-        });
+        html += '<optgroup label="' + esc(b) + '">';
+        byBrand[b].forEach(function (c) { html += '<option value="' + c.id + '">' + esc(c.name) + " · " + c.year + "</option>"; });
         html += "</optgroup>";
       });
       sel.innerHTML = html || '<option value="">검색 결과 없음</option>';
@@ -518,92 +403,152 @@
     });
     if (selA.value === selB.value) {
       var opts = selB.querySelectorAll("option");
-      for (var i = 0; i < opts.length; i++) {
-        if (opts[i].value && opts[i].value !== selA.value) { selB.value = opts[i].value; break; }
-      }
+      for (var i = 0; i < opts.length; i++) if (opts[i].value && opts[i].value !== selA.value) { selB.value = opts[i].value; break; }
     }
     render();
   }
 
-  function pill(c) { return '<span class="pill ' + c.type + '">' + c.type + "</span>"; }
+  function typePill(c) { return '<span class="pill ' + c.type + '">' + c.type + "</span>"; }
 
-  function displayValue(row, cam) {
-    var raw = cam[row.key];
+  function idcard(el, c) {
+    el.innerHTML =
+      '<div class="badges">' + typePill(c) +
+        '<span class="chip">' + esc(c.brand) + '</span>' +
+        '<span class="chip">' + esc(c.format) + '</span>' +
+        '<span class="chip">' + esc(c.body) + '</span></div>' +
+      '<div class="kv"><dt>출시</dt><dd>' + c.releasedLabel + '</dd></div>' +
+      '<div class="kv"><dt>출시가</dt><dd>' + won(c.price) + '</dd></div>' +
+      '<div class="kv"><dt>중고 시세</dt><dd>' + (c.used ? won(c.used) : "정보 없음") + '</dd></div>';
+  }
+
+  function fmtVal(row, c) {
+    var raw = c[row.key];
     if (raw === undefined || raw === null || raw === "") return "—";
     if (row.type === "num") {
       if (row.zero && Number(raw) === 0) return row.zero;
-      if (row.fmt === "won") return fmtWon(raw);
-      if (row.fmt === "people") return fmtPeople(raw);
-      if (row.fmt === "int") return fmtInt(raw);
+      if (row.fmt === "won") return won(raw);
+      if (row.fmt === "people") return people(raw);
+      if (row.fmt === "int") return int(raw);
       return raw + (row.unit ? " " + row.unit : "");
     }
     return raw;
   }
-  function cell(text, side, better) {
-    var cls = "val " + (side === "right" ? "right " : "") + (better ? "better" : "");
-    var flag = better ? '<span class="flag">유리</span>' : "";
-    return '<div class="' + cls.trim() + '"><span class="txt">' + esc(text) + "</span>" + flag + "</div>";
+  function winSide(row, a, b) {
+    if (a.id === b.id || row.type !== "num" || !row.better) return 0;
+    var na = Number(a[row.key]), nb = Number(b[row.key]);
+    if (!isFinite(na) || !isFinite(nb)) return 0;
+    if (row.zero && (na === 0 || nb === 0)) return 0;
+    if (na === nb) return 0;
+    var aWins = row.better === "high" ? na > nb : na < nb;
+    return aWins ? -1 : 1;
+  }
+  function valCell(text, side, win) {
+    return '<div class="v ' + (side === "r" ? "r " : "") + (win ? "win" : "") + '">' +
+      '<span class="t">' + esc(text) + "</span></div>";
+  }
+
+  function keyDiffs(a, b) {
+    if (a.id === b.id) return null;
+    var out = [];
+    var nameA = "<b>" + esc(a.name) + "</b>", nameB = "<b>" + esc(b.name) + "</b>";
+    var yd = a.year - b.year;
+    if (Math.abs(yd) >= 2) out.push([9, (yd > 0 ? nameA : nameB) + "가 " + Math.abs(yd) + "년 더 최신 (" + a.year + " vs " + b.year + ")"]);
+    if (a.format !== b.format) out.push([8, "센서 포맷이 다름 — A: " + esc(a.format) + " / B: " + esc(b.format)]);
+    var md = (Number(a.mp) || 0) - (Number(b.mp) || 0);
+    if (Math.abs(md) >= 6) out.push([7, (md > 0 ? nameA : nameB) + "가 화소 " + Math.abs(Math.round(md)) + "MP 많음 (" + a.mp + " vs " + b.mp + ")"]);
+    var aIbis = /없음/.test(a.ibis), bIbis = /없음/.test(b.ibis);
+    if (aIbis !== bIbis) out.push([6, (aIbis ? nameB : nameA) + "만 바디 손떨림 보정 있음"]);
+    var bd = a.burstBest - b.burstBest;
+    if (Math.abs(bd) >= 10) out.push([5, (bd > 0 ? nameA : nameB) + "가 연사 빠름 (" + a.burstBest + " vs " + b.burstBest + " fps)"]);
+    var wd = (Number(a.weight) || 0) - (Number(b.weight) || 0);
+    if (Math.abs(wd) >= 90) out.push([4, (wd < 0 ? nameA : nameB) + "가 " + Math.abs(wd) + "g 가벼움 (" + a.weight + "g vs " + b.weight + "g)"]);
+    if (a.used && b.used) {
+      var ud = a.used - b.used;
+      if (Math.abs(ud) >= 400000) out.push([6, (ud < 0 ? nameA : nameB) + "가 중고로 " + won(Math.abs(ud)) + " 저렴"]);
+    }
+    if (a.users && b.users && Math.max(a.users, b.users) / Math.min(a.users, b.users) >= 3)
+      out.push([3, (a.users > b.users ? nameA : nameB) + "가 사용자층이 훨씬 두꺼움 (" + people(a.users) + " vs " + people(b.users) + ")"]);
+    out.sort(function (x, y) { return y[0] - x[0]; });
+    return out.slice(0, 5).map(function (x) { return x[1]; });
   }
 
   function render() {
-    var a = byId(selA.value), b = byId(selB.value);
-    var same = a.id === b.id;
+    var a = byId(selA.value), b = byId(selB.value), same = a.id === b.id;
 
-    $("#hA").innerHTML = esc(a.name) + " " + pill(a);
-    $("#hB").innerHTML = esc(b.name) + " " + pill(b);
-    $("#subA").textContent = a.releasedLabel + " · 중고 " + (a.used ? fmtWon(a.used) : "정보 없음");
-    $("#subB").textContent = b.releasedLabel + " · 중고 " + (b.used ? fmtWon(b.used) : "정보 없음");
+    $("#hA").innerHTML = esc(a.name);
+    $("#hB").innerHTML = esc(b.name);
+    idcard($("#cardA"), a);
+    idcard($("#cardB"), b);
 
-    var tiles = [
-      { h: "출시가 (바디)", av: fmtWon(a.price), bv: fmtWon(b.price) },
-      { h: "중고 시세", av: a.used ? fmtWon(a.used) : "정보 없음", bv: b.used ? fmtWon(b.used) : "정보 없음" },
-      { h: "출시 연도", av: a.year + "년", bv: b.year + "년" },
-      { h: "추정 사용자 수", av: fmtPeople(a.users), bv: fmtPeople(b.users) }
+    // key differences
+    var kd = keyDiffs(a, b), kdBox = $("#keydiff");
+    if (same) { kdBox.hidden = true; }
+    else {
+      kdBox.hidden = false;
+      $("#keydiffList").innerHTML = kd && kd.length
+        ? kd.map(function (t) { return "<li>" + t + "</li>"; }).join("")
+        : '<li class="same">두 기종의 주요 수치 차이가 크지 않습니다.</li>';
+    }
+
+    // tiles
+    var tileDefs = [
+      { h: "출시가", ka: won(a.price), kb: won(b.price), na: a.price, nb: b.price, lowBetter: true },
+      { h: "중고 시세", ka: a.used ? won(a.used) : "정보 없음", kb: b.used ? won(b.used) : "정보 없음", na: a.used, nb: b.used, lowBetter: true },
+      { h: "출시 연도", ka: a.year + "년", kb: b.year + "년", na: a.year, nb: b.year, lowBetter: false, dyear: true },
+      { h: "추정 사용자 수", ka: people(a.users), kb: people(b.users), na: a.users, nb: b.users, lowBetter: false }
     ];
-    $("#tiles").innerHTML = tiles.map(function (t) {
-      return '<div class="tile"><h3>' + t.h + '</h3><div class="duo">' +
-        '<div><div class="v">' + t.av + '</div><div class="n">' + esc(a.name) + "</div></div>" +
-        '<div><div class="v">' + t.bv + '</div><div class="n">' + esc(b.name) + "</div></div>" +
-        "</div></div>";
+    $("#tiles").innerHTML = tileDefs.map(function (t) {
+      var win = 0, delta = "";
+      if (!same && t.na && t.nb && t.na !== t.nb) {
+        win = (t.lowBetter ? t.na < t.nb : t.na > t.nb) ? 1 : 2;
+        if (t.h === "출시가" || t.h === "중고 시세") delta = won(Math.abs(t.na - t.nb)) + " 차이";
+        else if (t.dyear) delta = Math.abs(t.na - t.nb) + "년 차이";
+      }
+      return '<div class="tile"><h3>' + t.h + '</h3><div class="pair">' +
+        '<div><div class="val' + (win === 1 ? " w" : "") + '">' + t.ka + '</div><div class="who">' + esc(a.name) + '</div></div>' +
+        '<div><div class="val' + (win === 2 ? " w" : "") + '">' + t.kb + '</div><div class="who">' + esc(b.name) + '</div></div>' +
+        (delta ? '<div class="delta">' + delta + '</div>' : '') +
+        '</div></div>';
     }).join("");
 
+    // comparison rows
     var html = "";
     GROUPS.forEach(function (g) {
+      var rows = g.rows.filter(function (r) { return state.full || r.core; });
+      if (!rows.length) return;
       html += '<div class="grp">' + g.title + "</div>";
-      g.rows.forEach(function (row) {
-        var va = displayValue(row, a), vb = displayValue(row, b);
-        var betterSide = 0;
-        if (!same && row.type === "num" && row.better && va !== "—" && vb !== "—") {
-          var na = Number(a[row.key]), nb = Number(b[row.key]);
-          if (!(row.zero && (na === 0 || nb === 0))) {
-            if (na > nb) betterSide = row.better === "high" ? -1 : 1;
-            else if (nb > na) betterSide = row.better === "high" ? 1 : -1;
-          }
-        }
-        html += '<div class="row">' +
-          cell(va, "left", betterSide === -1) +
+      rows.forEach(function (row) {
+        var w = winSide(row, a, b);
+        var hl = row.key === "used" || row.key === "price" || row.key === "users";
+        html += '<div class="row' + (hl ? " hl" : "") + '">' +
+          valCell(fmtVal(row, a), "l", w === -1) +
           '<div class="lbl">' + row.label + "</div>" +
-          cell(vb, "right", betterSide === 1) +
+          valCell(fmtVal(row, b), "r", w === 1) +
           "</div>";
       });
     });
     $("#rows").innerHTML = html;
 
-    var note = same
-      ? "같은 기종을 골랐어요. 다른 기종을 선택하면 유리한 항목이 표시됩니다."
-      : "초록색 <b>유리</b> 표시는 수치를 단순 비교한 결과입니다. 화질·색감·조작감·렌즈군은 수치로 판단하기 어렵습니다.";
+    var m = DB.meta || {};
     $("#foot").innerHTML =
-      "<p>" + note + "</p>" +
-      "<p><b>중고 시세</b>는 바디 단품·중급 상태 기준의 국내 시장 근사치입니다. UA카메라(uacamera.co.kr) 등 중고 매장 시세와 시장 관측을 참고했으며, 실제 거래가는 상태·구성품·시점에 따라 크게 달라집니다. '정보 없음'은 아직 시세를 넣지 못한 기종입니다.</p>" +
-      "<p><b>추정 사용자 수</b>는 제조사가 기종별 판매량을 공식 공개하지 않아, 공급망·판매 순위 보도·중고 유통량 등을 종합한 대략적 추정치입니다. " +
-      "일부 기종(소니 α7 III·α6000, 후지 X100VI 등)만 '해당 분기 최다 판매' 수준의 근거가 있고 나머지는 신뢰도가 낮습니다.</p>" +
-      "<p><b>출시가</b>는 출시 시점 기준이며 구형 기종은 환산 근사치입니다. <b>AF 측거</b> 표기는 제조사마다 세는 방식(점·존)이 달라 직접 비교가 완전하지 않습니다. 스펙은 v1 기준 근사치가 섞여 있습니다.</p>";
+      "<p>" + (same
+        ? "같은 기종을 골랐어요. 다른 기종을 선택하면 유리한 값에 <b style='color:var(--win)'>▲</b> 가 표시됩니다."
+        : "<b style='color:var(--win)'>▲</b> 는 수치를 단순 비교해 유리한 쪽입니다. 화질·색감·조작감·렌즈군은 수치만으로 판단하기 어렵습니다.") + "</p>" +
+      "<p><b>중고 시세</b> — " + esc(m.usedNote || "") + ". <a href='https://uacamera.co.kr' target='_blank' rel='noopener'>UA카메라</a> 등 참고. '정보 없음'은 아직 시세 미기입.</p>" +
+      "<p><b>추정 사용자 수</b> — " + esc(m.usersNote || "") + ". 소니 α7 III·α6000, 후지 X100VI 등 일부만 '분기 최다 판매' 수준의 근거가 있음.</p>" +
+      "<p><b>출시가</b> — " + esc(m.priceNote || "") + ". 스펙은 v1 근사치가 섞여 있으며 계속 보정 중입니다.</p>";
   }
 
   selA.addEventListener("change", render);
   selB.addEventListener("change", render);
   $("#swap").addEventListener("click", function () {
     var t = selA.value; selA.value = selB.value; selB.value = t; render();
+  });
+  $("#viewToggle").addEventListener("click", function () {
+    state.full = !state.full;
+    this.setAttribute("aria-pressed", String(state.full));
+    this.textContent = state.full ? "핵심만 보기" : "전체 항목 보기";
+    render();
   });
   qInput.addEventListener("input", function () {
     state.q = qInput.value.trim();
@@ -615,11 +560,13 @@
   });
 
   $("#total").textContent = CAMERAS.length;
+  $("#updated").textContent = (DB.meta && DB.meta.updated) || "—";
   buildBrands();
   fillSelects();
-  // 기본 비교 대상
   if (selA.querySelector('option[value="sony-a7iv"]')) selA.value = "sony-a7iv";
-  if (selB.querySelector('option[value="canon-r6m2"]')) selB.value = "canon-r6m2";
+  if (selB.querySelector('option[value="nikon-z6iii"]')) selB.value = "nikon-z6iii";
   render();
 })();
 </script>
+</body>
+</html>
